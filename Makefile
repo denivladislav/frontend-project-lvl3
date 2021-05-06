@@ -9,3 +9,6 @@ lint:
 
 rss:
 	node bin/rss.js
+
+build:
+	npm run build
