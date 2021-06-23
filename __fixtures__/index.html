@@ -11,11 +11,25 @@
     <title>RSS</title>
   </head>
   <body>
-    <div class="container">
-      <form class="form-inline">
-          <input type="text" required="required" class="form-control mr-3" name="email">
-          <input type="submit" class="btn btn-primary mr-3" value="Add">
-      </form>
-    </div>
+    <section class="container p-3 my-3 bg-dark text-white">
+      <div class="col-md-10 col-lg-8" name="display">
+        <h1>RSS aggregator</h1>
+        <form class="form-inline">
+            <input type="text" required="required" class="form-control mr-3" placeholder="input RSS link" name="url">
+            <input type="submit" class="btn btn-primary mr-3" value="Add">
+        </form>
+        <p class="text-muted my-1">
+          Example: https://ru.hexlet.io/lessons.rss
+        </p>
+        <p name='feedback'>
+        </p>
+      </div>  
+    </section>
+    <section class='container p-3 my-3'>
+      <div class="col-md-10 col-lg-8" name="feeds">
+      </div>
+      <div class="col-md-10 col-lg-8" name="posts">
+      </div>
+    </section>
   </body>
 </html>
