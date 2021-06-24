@@ -1,0 +1,17 @@
+{ 
+  "languages": {
+  "en": "English"
+  },
+  "feedback": {
+    "successfulRSSDownload": "RSS successfully downloaded!"
+  },
+  "headers": {
+    "posts": "Posts",
+    "feeds": "Feeds"
+  },
+  "errors": {
+    "invalidURL": "Invalid URL",
+    "duplicateURL": "This URL already exists",
+    "invalidRSS": "This URL does not contain valid RSS"
+  }
+}
