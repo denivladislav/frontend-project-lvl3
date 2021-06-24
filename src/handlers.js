@@ -17,7 +17,6 @@ export const processStateHandler = (processState) => {
 };
 
 export const renderError = (value) => {
-  console.log('RENDER ERRROR:', value);
   if (value.length === 0) {
     return;
   }
