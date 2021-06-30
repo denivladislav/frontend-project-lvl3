@@ -22,7 +22,12 @@ export default (str) => {
   const posts = {};
   let postId = 0;
   postsData.forEach((postData) => {
-    posts[postId] = { title: postData[0], description: postData[1], link: postData[2] };
+    posts[postId] = {
+      title: postData[0],
+      description: postData[1],
+      link: postData[2],
+      viewed: false,
+    };
     postId += 1;
   });
 
