@@ -93,8 +93,6 @@ export default () => {
         },
       };
 
-      alert('Enter!');
-
       const watchedState = watch(state);
 
       const checkUpdates = () => {
