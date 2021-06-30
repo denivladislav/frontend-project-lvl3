@@ -1,3 +1,3 @@
-import app from './application.js';
+import app from './app.js';
 
 app();

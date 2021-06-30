@@ -1,9 +1,9 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "hexlet educational project 3",
+  "description": "hexlet education project #3",
   "private": true,
-  "main": "src/index.js",
+  "main": "src/app.js",
   "bin": {
     "rss": "bin/rss.js"
   },
