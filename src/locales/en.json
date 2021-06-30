@@ -1,7 +1,4 @@
 { 
-  "languages": {
-  "en": "English"
-  },
   "feedback": {
     "successfulRSSDownload": "RSS successfully downloaded!"
   },
@@ -13,5 +10,10 @@
     "invalidURL": "Invalid URL",
     "duplicateURL": "This URL already exists",
     "invalidRSS": "This URL does not contain valid RSS"
+  },
+  "buttons": {
+    "look": "Look",
+    "read": "Read full post",
+    "close": "Close"
   }
 }
