@@ -15,7 +15,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: '__fixtures__/index.html',
+      template: 'index.html',
     }),
   ],
   output: {
