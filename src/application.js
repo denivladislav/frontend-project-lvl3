@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import * as yup from 'yup';
+import _ from 'lodash';
 import axios from 'axios';
 import i18next from 'i18next';
 import translationEN from './locales/en.json';
@@ -94,10 +95,65 @@ export default () => {
 
       alert('Enter!');
 
+      const watchedState = watch(state);
+
+      const checkUpdates = () => {
+        const urlIds = Object.keys(watchedState.rssForm.data);
+        if (urlIds) {
+          urlIds.forEach((urlId) => {
+            const urlToCheck = watchedState.rssForm.data[urlId].url;
+            axios.get(proxy(urlToCheck))
+              .then((response) => parseRSS(response.data))
+              .then((data) => {
+                console.log('Enter!');
+                const existingPosts = watchedState.rssForm.data[urlId].posts;
+                let existingPostsIds = Object.keys(existingPosts);
+                const existingPostsTitles = existingPostsIds
+                  .map((existingPostId) => existingPosts[existingPostId].title);
+
+                const dataPosts = data.posts;
+                const dataPostsIds = Object.keys(dataPosts);
+                const dataPostsTitles = dataPostsIds
+                  .map((newPostId) => dataPosts[newPostId].title);
+
+                // eslint-disable-next-line max-len
+                const newPostsTitles = _.differenceWith(dataPostsTitles, existingPostsTitles, _.isEqual);
+
+                dataPostsIds.forEach((dataPostsId) => {
+                  newPostsTitles.forEach((newPostTitle) => {
+                    if (dataPosts[dataPostsId].title === newPostTitle) {
+                      existingPostsIds = Object.keys(watchedState.rssForm.data[urlId].posts);
+                      const newPostId = Number(_.last(existingPostsIds)) + 1;
+                      console.log(newPostId);
+                      const newPostDescription = dataPosts[dataPostsId].description;
+                      const newPostLink = dataPosts[dataPostsId].link;
+
+                      watchedState.rssForm.data[urlId].posts[newPostId] = {
+                        title: newPostTitle,
+                        description: newPostDescription,
+                        link: newPostLink,
+                      };
+
+                      const postsUl = document.querySelector('[name="posts"] ul');
+                      const postLi = document.createElement('li');
+                      const a = document.createElement('a');
+                      a.href = newPostLink;
+                      a.innerHTML = newPostTitle;
+                      postLi.append(a);
+                      postsUl.prepend(postLi);
+                    }
+                  });
+                });
+              });
+          });
+        }
+        setTimeout(checkUpdates, 5000);
+      };
+
+      setTimeout(checkUpdates, 5000);
+
       const form = document.querySelector('form');
       const inputField = document.querySelector('[name="url"]');
-
-      const watchedState = watch(state);
 
       inputField.addEventListener('input', (e) => {
         e.preventDefault();
@@ -129,7 +185,6 @@ export default () => {
                     },
                     posts: data.posts,
                   };
-
                   const dataKeys = Object.keys(watchedState.rssForm.data);
                   dataKeys.forEach((key) => {
                     const currentData = watchedState.rssForm.data[key];
@@ -140,17 +195,45 @@ export default () => {
                     feedDescription.innerHTML = currentData.feed.description;
                     feedLi.append(feedTitle, feedDescription);
                     const feedsUl = document.querySelector('[name="feeds"] ul');
-                    feedsUl.append(feedLi);
+                    feedsUl.prepend(feedLi);
 
                     const postsUl = document.querySelector('[name="posts"] ul');
                     const postKeys = Object.keys(currentData.posts);
-                    postKeys.forEach((postKey) => {
+                    (_.reverse(postKeys)).forEach((postKey) => {
                       const postLi = document.createElement('li');
                       const a = document.createElement('a');
+                      const button = document.createElement('button');
+                      button.setAttribute('type', 'button');
+                      button.classList.add('btn', 'btn-primary');
+                      button.dataset.toggle = 'modal';
+                      button.dataset.target = '#modal';
+                      button.innerHTML = i18nextInstance.t('buttons.look');
+                      button.addEventListener('click', (err) => {
+                        err.preventDefault();
+                        const modalTitle = document.querySelector('.modal-title');
+                        modalTitle.innerHTML = currentData.posts[postKey].title;
+                        const modalBody = document.querySelector('.modal-body');
+                        modalBody.innerHTML = currentData.posts[postKey].description;
+                        const closeButton = document.querySelector('#closeButton');
+                        closeButton.innerHTML = i18nextInstance.t('buttons.close');
+                        const readButton = document.querySelector('#readButton');
+                        readButton.innerHTML = i18nextInstance.t('buttons.read');
+                        readButton.setAttribute('onclick', `location.href="${currentData.posts[postKey].link}";`);
+                        currentData.posts[postKey].viewed = true;
+                        const currentA = document.querySelector(`[id="${postKey}"]`);
+                        console.log(currentA);
+                        currentA.style = 'color: gray';
+                        currentA.classList.remove('fw-bold');
+                        currentA.classList.add('fw-normal');
+                      });
                       a.href = currentData.posts[postKey].link;
                       a.innerHTML = currentData.posts[postKey].title;
+                      a.id = postKey;
+                      a.classList.add('fw-bold');
                       postLi.append(a);
-                      postsUl.append(postLi);
+                      postLi.append(button);
+                      postsUl.prepend(postLi);
+                      console.log(postsUl);
                     });
                   });
 
