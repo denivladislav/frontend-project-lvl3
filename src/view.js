@@ -1,12 +1,11 @@
 /* eslint-disable no-param-reassign */
 import onChange from 'on-change';
 import _ from 'lodash';
-
-const addButton = document.querySelector('#addButton');
-const inputField = document.querySelector('#url-input');
-const feedback = document.querySelector('.feedback');
-const feeds = document.querySelector('#feeds');
-const posts = document.querySelector('#posts');
+import {
+  addButton, feedback,
+  feeds, posts,
+  inputField,
+} from './constants.js';
 
 const getLookButtonHandler = (watchedState, urlId, postId) => function handler(e) {
   e.preventDefault();

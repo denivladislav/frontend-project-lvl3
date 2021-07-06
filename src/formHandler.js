@@ -3,6 +3,7 @@ import _ from 'lodash';
 import * as yup from 'yup';
 import axios from 'axios';
 import parseRss from './parser.js';
+import { form, inputField } from './constants.js';
 
 yup.setLocale({
   string: {
@@ -14,11 +15,11 @@ const schema = yup.string()
   .required('emptyUrl')
   .url();
 
-const validateFormUrl = (form) => schema.validate(form.currentUrl)
+const validateFormUrl = (rssForm) => schema.validate(rssForm.currentUrl)
   .then(() => {
-    const urlIds = _.keys(form.data);
-    const existingUrls = urlIds.map((urlId) => form.data[urlId].url);
-    if (_.includes(existingUrls, form.currentUrl)) {
+    const urlIds = _.keys(rssForm.data);
+    const existingUrls = urlIds.map((urlId) => rssForm.data[urlId].url);
+    if (_.includes(existingUrls, rssForm.currentUrl)) {
       throw new Error('duplicateUrl');
     }
   });
@@ -96,8 +97,6 @@ export const checkUpdates = (watchedState) => {
 
 export const getFormHandler = (watchedState) => function handler(e) {
   e.preventDefault();
-  const form = document.querySelector('.rss-form');
-  const inputField = document.querySelector('#url-input');
   const formData = new FormData(e.target);
   const currentUrl = formData.get('url-input');
   watchedState.rssForm.currentUrl = currentUrl;
