@@ -32,7 +32,7 @@ const getUrlId = () => {
 
 const getRssData = (url) => {
   const proxy = 'https://hexlet-allorigins.herokuapp.com/get?url=';
-  const axiosPromise = axios.get(`${proxy}${url}`)
+  const axiosPromise = axios.get(proxy, { params: { url, disableCache: true } })
     .catch((error) => {
       console.log('AXIOSERROR', error);
       console.log('AXIOSERROR.MESSAGE', error.message);
