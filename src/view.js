@@ -90,17 +90,15 @@ const dataRender = (data, i18nextInstance, watchedState) => {
       const postTitle = currentPost.title;
       const postLink = currentPost.link;
       const lookButtonName = i18nextInstance.t('buttons.look');
-      let postLinkBoldness;
-      if (currentPost.viewed) {
-        postLinkBoldness = 'fw-normal';
-      } else postLinkBoldness = 'fw-bold';
 
       const postLi = document.createElement('li');
       postLi.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
       const a = document.createElement('a');
       a.href = `${postLink}`;
-      a.classList.add(`${postLinkBoldness}`);
+      if (currentPost.viewed) {
+        a.classList.add('fw-normal');
+      } else a.classList.add('fw-bold');
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');
       a.innerHTML = `${postTitle}`;

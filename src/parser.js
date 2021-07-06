@@ -28,15 +28,15 @@ export default (str) => {
     const postsData = _.zip(postTitles, postDescriptions, postLinks);
 
     const posts = {};
-    let postId = 0;
+
     postsData.forEach((postData) => {
+      const postId = _.uniqueId();
       posts[postId] = {
         title: postData[0],
         description: postData[1],
         link: postData[2],
         viewed: false,
       };
-      postId += 1;
     });
 
     return {

@@ -23,13 +23,6 @@ const validateFormUrl = (form) => schema.validate(form.currentUrl)
     }
   });
 
-let idNumber = -1;
-
-const getUrlId = () => {
-  idNumber += 1;
-  return idNumber;
-};
-
 const getRssData = (url) => {
   const proxy = 'https://hexlet-allorigins.herokuapp.com/get';
   const axiosPromise = axios.get(proxy, { params: { url, disableCache: true } })
@@ -63,13 +56,11 @@ export const checkUpdates = (watchedState) => {
         const newPostsTitles = _.differenceWith(loadedPostsTitles, existingPostsTitles, _.isEqual);
         console.log('newPostsTitles', newPostsTitles);
         if (!_.isEmpty(newPostsTitles)) {
-          let lastId = Number(_.last(existingPostsIds));
           const newPosts = {};
           newPostsTitles.forEach((newPostsTitle) => {
             loadedPostsIds.forEach((loadedPostsId) => {
               if (newPostsTitle === loadedPosts[loadedPostsId].title) {
-                lastId += 1;
-                const newPostId = lastId;
+                const newPostId = _.uniqueId();
                 const newPostDescription = loadedPosts[loadedPostsId].description;
                 const newPostLink = loadedPosts[loadedPostsId].link;
                 newPosts[newPostId] = {
@@ -116,7 +107,7 @@ export const getFormHandler = (watchedState) => function handler(e) {
       watchedState.rssForm.feedback = { type: 'successMessage' };
       console.log('parsedData', parsedData);
 
-      const urlId = getUrlId();
+      const urlId = _.uniqueId();
       const newData = {};
       newData[urlId] = {
         url: currentUrl,
