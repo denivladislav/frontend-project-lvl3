@@ -31,7 +31,7 @@ const getUrlId = () => {
 };
 
 const getRssData = (url) => {
-  const proxy = 'https://hexlet-allorigins.herokuapp.com/raw?url=';
+  const proxy = 'https://hexlet-allorigins.herokuapp.com/get?url=';
   const axiosPromise = axios.get(`${proxy}${url}`)
     .catch((error) => {
       console.log('AXIOSERROR', error);
@@ -48,7 +48,7 @@ export const checkUpdates = (watchedState) => {
   urlIds.forEach((urlId) => {
     const urlToCheck = data[urlId].url;
     getRssData(urlToCheck)
-      .then((response) => parseRss(response.data))
+      .then((response) => parseRss(response.data.contents))
       .then((parsedData) => {
         const existingPosts = data[urlId].posts;
         const existingPostsIds = _.keys(existingPosts);
@@ -106,7 +106,10 @@ export const getFormHandler = (watchedState) => function handler(e) {
       watchedState.rssForm.processState = 'sending';
       return Promise.resolve(getRssData(currentUrl));
     })
-    .then((response) => parseRss(response.data))
+    .then((response) => {
+      console.log(response);
+      return Promise.resolve(parseRss(response.data.contents));
+    })
     .then((parsedData) => {
       watchedState.rssForm.processState = 'finished';
       watchedState.rssForm.valid = true;
