@@ -1,11 +1,6 @@
 /* eslint-disable no-param-reassign */
 import onChange from 'on-change';
 import _ from 'lodash';
-import {
-  addButton, feedback,
-  feeds, posts,
-  inputField,
-} from './constants.js';
 
 const getLookButtonHandler = (watchedState, urlId, postId) => function handler(e) {
   e.preventDefault();
@@ -27,6 +22,8 @@ const getLookButtonHandler = (watchedState, urlId, postId) => function handler(e
 };
 
 const processStateRender = (processState) => {
+  const addButton = document.querySelector('#addButton');
+  const feedback = document.querySelector('.feedback');
   switch (processState) {
     case 'filling':
       addButton.disabled = false;
@@ -44,6 +41,7 @@ const processStateRender = (processState) => {
 };
 
 const feedbackRender = (feedbackData, i18nextInstance) => {
+  const feedback = document.querySelector('.feedback');
   switch (feedbackData.type) {
     case 'successMessage':
       feedback.innerHTML = i18nextInstance.t('messages.success');
@@ -61,6 +59,8 @@ const feedbackRender = (feedbackData, i18nextInstance) => {
 };
 
 const dataRender = (data, i18nextInstance, watchedState) => {
+  const feeds = document.querySelector('#feeds');
+  const posts = document.querySelector('#posts');
   feeds.innerHTML = `<h2 class="h4 m-0">${i18nextInstance.t('headers.feeds')}</h2>`;
   posts.innerHTML = `<h2 class="h4 m-0">${i18nextInstance.t('headers.posts')}</h2>`;
 
@@ -138,6 +138,7 @@ const modalRender = (modalData, i18nextInstance) => {
 
 export default (state, i18nextInstance) => {
   const watchedState = onChange(state, (statePath, currValue) => {
+    const inputField = document.querySelector('#url-input');
     switch (statePath) {
       case 'rssForm.processState':
         processStateRender(currValue);
