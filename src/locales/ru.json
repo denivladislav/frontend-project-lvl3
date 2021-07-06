@@ -1,0 +1,21 @@
+{ 
+  "messages": {
+    "success": "RSS успешно загружен"
+  },
+  "headers": {
+    "posts": "Посты",
+    "feeds": "Фиды"
+  },
+  "errors": {
+    "emptyUrl": "Не должно быть пустым",
+    "invalidUrl": "Ссылка должна быть валидным URL",
+    "duplicateUrl": "RSS уже существует",
+    "invalidRss": "Ресурс не содержит валидный RSS",
+    "networkError": "Ошибка сети"
+  },
+  "buttons": {
+    "look": "Просмотр",
+    "read": "Читать полностью",
+    "close": "Закрыть"
+  }
+}
