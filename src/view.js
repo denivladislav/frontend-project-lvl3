@@ -22,6 +22,7 @@ const getLookButtonHandler = (watchedState, urlId, postId) => function handler(e
 };
 
 const processStateRender = (processState) => {
+  const inputField = document.querySelector('#url-input');
   const addButton = document.querySelector('#addButton');
   const feedback = document.querySelector('.feedback');
   switch (processState) {
@@ -30,9 +31,11 @@ const processStateRender = (processState) => {
       break;
     case 'sending':
       feedback.innerHTML = '';
+      inputField.readOnly = true;
       addButton.disabled = true;
       break;
     case 'finished':
+      inputField.readOnly = false;
       addButton.disabled = false;
       break;
     default:
