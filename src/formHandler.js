@@ -41,9 +41,6 @@ const getRssData = (url) => {
   return Promise.resolve(axiosPromise);
 };
 
-const form = document.querySelector('.rss-form');
-const inputField = document.querySelector('#url-input');
-
 export const checkUpdates = (watchedState) => {
   console.log('Enter check updates');
   const { data } = watchedState.rssForm;
@@ -99,6 +96,8 @@ export const checkUpdates = (watchedState) => {
 
 export const getFormHandler = (watchedState) => function handler(e) {
   e.preventDefault();
+  const form = document.querySelector('.rss-form');
+  const inputField = document.querySelector('#url-input');
   const formData = new FormData(e.target);
   const currentUrl = formData.get('url-input');
   watchedState.rssForm.currentUrl = currentUrl;
