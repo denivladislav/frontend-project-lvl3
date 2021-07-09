@@ -1,4 +1,4 @@
-### RSS агрегатор
+# RSS агрегатор
 Простое и лаконичное приложение для ваших новостей.
 [![Actions Status](https://github.com/vvvhatislove/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions)
 [![CI](https://github.com/vvvhatislove/frontend-project-lvl2/workflows/CI/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions/workflows/CI.yml)
