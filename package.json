@@ -4,9 +4,6 @@
   "description": "hexlet education project #3",
   "private": true,
   "main": "src/init.js",
-  "bin": {
-    "rss": "bin/rss.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
