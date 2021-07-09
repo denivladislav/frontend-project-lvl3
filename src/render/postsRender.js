@@ -13,8 +13,6 @@ const postHandler = (watchedState, viewedPostId) => function handler() {
     url: viewedPost.url,
   };
   watchedState.rssForm.currentModal = newModal;
-
-  console.log(watchedState.rssForm.rssData);
 };
 
 export default (posts, i18nextInstance, watchedState) => {
