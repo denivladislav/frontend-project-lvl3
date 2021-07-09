@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import translationEN from './locales/en.json';
 import translationRU from './locales/ru.json';
 import watch from './view.js';
 import getFormHandler from './formHandler.js';
@@ -11,9 +10,6 @@ export default () => {
     lng: 'ru',
     debug: true,
     resources: {
-      en: {
-        translation: translationEN,
-      },
       ru: {
         translation: translationRU,
       },
