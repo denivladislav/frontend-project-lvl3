@@ -11,7 +11,8 @@
     "invalidUrl": "Invalid URL",
     "duplicateUrl": "This URL already exists",
     "invalidRss": "This URL does not contain valid RSS",
-    "networkError": "Network Error"
+    "networkError": "Network Error",
+    "unknownState": "Unknown State"
   },
   "buttons": {
     "look": "Look",

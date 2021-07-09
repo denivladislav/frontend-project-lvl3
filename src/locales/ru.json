@@ -11,7 +11,8 @@
     "invalidUrl": "Ссылка должна быть валидным URL",
     "duplicateUrl": "RSS уже существует",
     "invalidRss": "Ресурс не содержит валидный RSS",
-    "networkError": "Ошибка сети"
+    "networkError": "Ошибка сети",
+    "unknownState": "Неизвестное состояние"
   },
   "buttons": {
     "look": "Просмотр",
