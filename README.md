@@ -1,7 +1,7 @@
 # RSS агрегатор
 Простое и лаконичное приложение для ваших новостей.  
 <img src="https://user-images.githubusercontent.com/71961494/125065873-09a13c80-e0bb-11eb-9595-17b21e971df1.png" alt="RSS aggregator screenshot"
-width="300" length="400">
+width="600" length="800">
 
 [![Actions Status](https://github.com/vvvhatislove/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions)
 [![CI](https://github.com/vvvhatislove/frontend-project-lvl2/workflows/CI/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions/workflows/CI.yml)
