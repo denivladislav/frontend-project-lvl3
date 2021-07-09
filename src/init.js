@@ -2,7 +2,8 @@ import i18next from 'i18next';
 import translationEN from './locales/en.json';
 import translationRU from './locales/ru.json';
 import watch from './view.js';
-import { getFormHandler, checkUpdates } from './formHandler.js';
+import getFormHandler from './formHandler.js';
+import checkFeedUpdates from './checkFeedUpdates.js';
 
 export default () => {
   const i18nextInstance = i18next.createInstance();
@@ -21,21 +22,21 @@ export default () => {
     .then(() => {
       const state = {
         rssForm: {
-          currentUrl: '',
           processState: 'filling',
-          data: {},
-          feedback: {},
-          modal: {},
-          valid: null,
+          rssData: {
+            feeds: [],
+            posts: [],
+          },
+          currentFeedback: {},
+          currentModal: {},
         },
       };
 
       const watchedState = watch(state, i18nextInstance);
 
       const form = document.querySelector('.rss-form');
-
       form.addEventListener('submit', getFormHandler(watchedState));
-      console.log('INIT!');
-      setTimeout(() => checkUpdates(watchedState), 5000);
+
+      setTimeout(() => checkFeedUpdates(watchedState), 5000);
     });
 };
