@@ -51,8 +51,11 @@ export const feedbackRender = (currentFeedback, i18nextInstance) => {
 
 export const feedsRender = (feeds, i18nextInstance) => {
   const feedsDiv = document.querySelector('#feeds');
-  feedsDiv.innerHTML = `<h2 class="h4 m-0">${i18nextInstance.t('headers.feeds')}</h2>`;
-
+  feedsDiv.innerHTML = `
+    <div class="card-body">
+      <h2 class="h4 m-0">${i18nextInstance.t('headers.feeds')}</h2>
+    </div>  
+  `;
   const feedsUl = document.createElement('ul');
   feedsUl.classList.add('list-group', 'border-0', 'rounded-0');
 
@@ -86,7 +89,11 @@ const getLookHandler = (watchedState, viewedPostId) => function handler() {
 
 export const postsRender = (posts, i18nextInstance, watchedState) => {
   const postsDiv = document.querySelector('#posts');
-  postsDiv.innerHTML = `<h2 class="h4 m-0">${i18nextInstance.t('headers.posts')}</h2>`;
+  postsDiv.innerHTML = `
+    <div class="card-body">
+        <h2 class="h4 m-0">${i18nextInstance.t('headers.posts')}</h2>
+    </div>    
+  `;
 
   const postsUl = document.createElement('ul');
   postsUl.classList.add('list-group', 'border-0', 'rounded-0');
