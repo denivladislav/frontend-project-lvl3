@@ -1,134 +1,48 @@
-/* eslint-disable no-param-reassign */
 import _ from 'lodash';
-import * as yup from 'yup';
-import axios from 'axios';
 import parseRss from './parser.js';
+import { validateUrl, getRssData } from './utils.js';
 
-yup.setLocale({
-  string: {
-    url: 'invalidUrl',
-  },
-});
-
-const schema = yup.string()
-  .required('emptyUrl')
-  .url();
-
-const validateFormUrl = (form) => schema.validate(form.currentUrl)
-  .then(() => {
-    const urlIds = _.keys(form.data);
-    const existingUrls = urlIds.map((urlId) => form.data[urlId].url);
-    if (_.includes(existingUrls, form.currentUrl)) {
-      throw new Error('duplicateUrl');
-    }
-  });
-
-const getRssData = (url) => {
-  const proxy = 'https://hexlet-allorigins.herokuapp.com/get';
-  const axiosPromise = axios.get(proxy, { params: { url, disableCache: true } })
-    .catch((error) => {
-      console.log('AXIOSERROR', error);
-      console.log('AXIOSERROR.MESSAGE', error.message);
-      throw new Error('networkError');
-    });
-  return Promise.resolve(axiosPromise);
-};
-
-export const checkUpdates = (watchedState) => {
-  console.log('Enter check updates');
-  const { data } = watchedState.rssForm;
-  const urlIds = _.keys(data);
-  urlIds.forEach((urlId) => {
-    const urlToCheck = data[urlId].url;
-    getRssData(urlToCheck)
-      .then((response) => parseRss(response.data.contents))
-      .then((parsedData) => {
-        const existingPosts = data[urlId].posts;
-        const existingPostsIds = _.keys(existingPosts);
-        const existingPostsTitles = existingPostsIds
-          .map((existingPostId) => existingPosts[existingPostId].titles);
-
-        const loadedPosts = parsedData.posts;
-        const loadedPostsIds = _.keys(loadedPosts);
-        const loadedPostsTitles = loadedPostsIds
-          .map((loadedPostId) => loadedPosts[loadedPostId].titles);
-
-        const newPostsTitles = _.differenceWith(loadedPostsTitles, existingPostsTitles, _.isEqual);
-        console.log('newPostsTitles', newPostsTitles);
-        if (!_.isEmpty(newPostsTitles)) {
-          const newPosts = {};
-          newPostsTitles.forEach((newPostsTitle) => {
-            loadedPostsIds.forEach((loadedPostsId) => {
-              if (newPostsTitle === loadedPosts[loadedPostsId].title) {
-                const newPostId = _.uniqueId();
-                const newPostDescription = loadedPosts[loadedPostsId].description;
-                const newPostLink = loadedPosts[loadedPostsId].link;
-                newPosts[newPostId] = {
-                  title: newPostsTitle,
-                  description: newPostDescription,
-                  link: newPostLink,
-                  viewed: false,
-                  new: true,
-                };
-              }
-            });
-          });
-          console.log('newPosts', newPosts);
-          const oldData = watchedState.rssForm.data;
-          const newData = _.cloneDeep(oldData);
-          _.merge(newData.posts, newPosts);
-          console.log('newData after merge', newData);
-          watchedState.rssForm.data = newData;
-        }
-      });
-  });
-  setTimeout(() => checkUpdates(watchedState), 5000);
-};
-
-export const getFormHandler = (watchedState) => function handler(e) {
-  const form = document.querySelector('.rss-form');
-  const inputField = document.querySelector('#url-input');
+export default (watchedState) => function handler(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const currentUrl = formData.get('url-input');
-  watchedState.rssForm.currentUrl = currentUrl;
-  validateFormUrl(watchedState.rssForm)
+  const { rssForm } = watchedState;
+  const existingUrls = rssForm.rssData.feeds.map((feed) => feed.url);
+  validateUrl(currentUrl, existingUrls)
     .then(() => {
-      watchedState.rssForm.processState = 'sending';
+      rssForm.processState = 'sending';
       return Promise.resolve(getRssData(currentUrl));
     })
-    .then((response) => {
-      console.log(response);
-      return Promise.resolve(parseRss(response.data.contents));
-    })
-    .then((parsedData) => {
-      watchedState.rssForm.processState = 'finished';
-      watchedState.rssForm.valid = true;
-      watchedState.rssForm.feedback = { type: 'successMessage' };
-      console.log('parsedData', parsedData);
+    .then((response) => parseRss(response))
+    .then((parsedRssData) => {
+      rssForm.processState = 'finished';
+      rssForm.currentFeedback = { type: 'successMessage' };
 
-      const urlId = _.uniqueId();
-      const newData = {};
-      newData[urlId] = {
-        url: currentUrl,
-        feed: parsedData.feed,
-        posts: parsedData.posts,
-      };
-      const oldData = watchedState.rssForm.data;
-      watchedState.rssForm.data = { ...oldData, ...newData };
+      const oldFeeds = rssForm.rssData.feeds;
+      const newFeed = parsedRssData.feed;
+      const newFeedId = _.uniqueId('feed_');
+      newFeed.feedId = newFeedId;
+      if (oldFeeds) {
+        rssForm.rssData.feeds = [newFeed].concat(oldFeeds);
+      } else rssForm.rssData.feeds = [newFeed];
 
-      console.log(watchedState.rssForm.data);
-      form.reset();
+      const oldPosts = rssForm.rssData.posts;
+      const newPosts = parsedRssData.posts.reduce((acc, newPost) => {
+        newPost.feedId = newFeedId;
+        newPost.postId = _.uniqueId('post_');
+        acc.push(newPost);
+        return acc;
+      }, []);
+      if (oldPosts) {
+        rssForm.rssData.posts = newPosts.concat(oldPosts);
+      } else rssForm.rssData.posts = newPosts;
     })
     .catch((error) => {
-      console.log('ERROR', error);
-      console.log('ERROR.MESSAGE', error.message);
-      watchedState.rssForm.processState = 'finished';
-      watchedState.rssForm.valid = false;
-      watchedState.rssForm.feedback = {
+      watchedState.rssForm.processState = 'failed';
+      watchedState.rssForm.currentFeedback = {
         type: 'errorMessage',
         tag: error.message,
       };
+      watchedState.rssForm.processState = 'filling';
     });
-  inputField.focus();
 };

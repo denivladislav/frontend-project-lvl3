@@ -1,40 +1,27 @@
-import _ from 'lodash';
-
-export default (str) => {
+export default (response) => {
   try {
-    const responseData = new window.DOMParser().parseFromString(str, 'text/xml');
+    const { url } = response.config.params;
+    const responseData = response.data.contents;
+    const parsedResponseData = new window.DOMParser().parseFromString(responseData, 'text/xml');
 
-    const feedTitle = responseData.querySelector('channel title').textContent;
-    const feedDescription = responseData.querySelector('channel description').textContent;
+    const feedTitle = parsedResponseData.querySelector('channel title').textContent;
+    const feedDescription = parsedResponseData.querySelector('channel description').textContent;
 
     const feed = {
       title: feedTitle,
       description: feedDescription,
+      url,
     };
 
-    const itemTitles = responseData.querySelectorAll('item title');
-    const itemDescriptions = responseData.querySelectorAll('item description');
-    const itemLinks = responseData.querySelectorAll('item link');
-
-    const postTitles = Array.from(itemTitles)
-      .map((itemTitle) => itemTitle.textContent);
-
-    const postDescriptions = Array.from(itemDescriptions)
-      .map((itemDescription) => itemDescription.textContent);
-
-    const postLinks = Array.from(itemLinks)
-      .map((postLink) => postLink.textContent);
-
-    const postsData = _.zip(postTitles, postDescriptions, postLinks);
-
-    const posts = {};
-
-    postsData.forEach((postData) => {
-      const postId = _.uniqueId();
-      posts[postId] = {
-        title: postData[0],
-        description: postData[1],
-        link: postData[2],
+    const itemsArray = Array.from(parsedResponseData.querySelectorAll('item'));
+    const posts = itemsArray.map((item) => {
+      const postTitle = item.querySelector('title').textContent;
+      const postDescription = item.querySelector('description').textContent;
+      const postLink = item.querySelector('link').textContent;
+      return {
+        title: postTitle,
+        description: postDescription,
+        link: postLink,
         viewed: false,
       };
     });
