@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import translationRU from './locales/ru.json';
 import watch from './view.js';
 import getFormHandler from './formHandler.js';
-import checkFeedUpdates from './checkFeedUpdates.js';
+import checkUpdates from './updatesChecker.js';
 
 export default () => {
   const i18nextInstance = i18next.createInstance();
@@ -33,6 +33,6 @@ export default () => {
       const form = document.querySelector('.rss-form');
       form.addEventListener('submit', getFormHandler(watchedState));
 
-      setTimeout(() => checkFeedUpdates(watchedState), 5000);
+      setTimeout(() => checkUpdates(watchedState), 5000);
     });
 };

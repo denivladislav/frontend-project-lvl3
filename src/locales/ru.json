@@ -9,7 +9,7 @@
   "errors": {
     "emptyUrl": "Не должно быть пустым",
     "invalidUrl": "Ссылка должна быть валидным URL",
-    "duplicateUrl": "RSS уже существует",
+    "duplicatedUrl": "RSS уже существует",
     "invalidRss": "Ресурс не содержит валидный RSS",
     "networkError": "Ошибка сети",
     "unknownState": "Неизвестное состояние"
