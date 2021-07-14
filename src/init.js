@@ -1,14 +1,14 @@
 import i18next from 'i18next';
 import translationRU from './locales/ru.json';
 import watch from './view.js';
-import getFormHandler from './formHandler.js';
+import getFormSubmitHandler from './formSubmitHandler.js';
 import checkUpdates from './updatesChecker.js';
 
 export default () => {
   const i18nextInstance = i18next.createInstance();
-  i18nextInstance.init({
+  return i18nextInstance.init({
     lng: 'ru',
-    debug: true,
+    debug: false,
     resources: {
       ru: {
         translation: translationRU,
@@ -17,22 +17,34 @@ export default () => {
   })
     .then(() => {
       const state = {
-        rssForm: {
-          processState: 'filling',
-          rssData: {
-            feeds: [],
-            posts: [],
-          },
-          currentFeedback: {},
-          currentModal: {},
+        processState: 'filling',
+        rssData: {
+          feeds: [],
+          posts: [],
         },
+        currentModal: {},
+        error: null,
       };
 
-      const watchedState = watch(state, i18nextInstance);
+      const domElements = {
+        inputField: document.querySelector('#url-input'),
+        addButton: document.querySelector('#addButton'),
+        feedback: document.querySelector('.feedback'),
+        form: document.querySelector('.rss-form'),
+        feeds: document.querySelector('#feeds'),
+        posts: document.querySelector('#posts'),
+        modalTitle: document.querySelector('.modal-title'),
+        modalBody: document.querySelector('.modal-body'),
+        closeModalButton: document.querySelector('#closeModalButton'),
+        readModalButton: document.querySelector('#readModalButton'),
+      };
+
+      const delay = 5000;
+
+      const watchedState = watch(state, i18nextInstance, domElements);
 
       const form = document.querySelector('.rss-form');
-      form.addEventListener('submit', getFormHandler(watchedState));
-
-      setTimeout(() => checkUpdates(watchedState), 5000);
+      form.addEventListener('submit', getFormSubmitHandler(watchedState));
+      setTimeout(() => checkUpdates(watchedState, delay), delay);
     });
 };
