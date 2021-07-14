@@ -1,5 +1,5 @@
-export default (feeds, i18nextInstance) => {
-  const feedsDiv = document.querySelector('#feeds');
+export default (feeds, i18nextInstance, domElements) => {
+  const feedsDiv = domElements.feeds;
   feedsDiv.innerHTML = `
     <div class="card-body">
       <h2 class="h4 m-0">${i18nextInstance.t('headers.feeds')}</h2>
