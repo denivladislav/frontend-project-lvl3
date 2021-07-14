@@ -26,6 +26,8 @@ export default (html) => {
       postsData,
     };
   } catch (e) {
-    throw new Error('invalidRss');
+    const error = new Error();
+    error.isRssParseError = true;
+    throw error;
   }
 };
