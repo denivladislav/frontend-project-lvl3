@@ -12,7 +12,7 @@
     "duplicatedUrl": "RSS уже существует",
     "invalidRss": "Ресурс не содержит валидный RSS",
     "networkError": "Ошибка сети",
-    "unknownState": "Неизвестное состояние"
+    "unknownError": "Неизвестная ошибка"
   },
   "buttons": {
     "look": "Просмотр",
