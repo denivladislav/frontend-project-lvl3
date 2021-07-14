@@ -1,8 +1,7 @@
-export default (processState, i18nextInstance) => {
-  const inputField = document.querySelector('#url-input');
-  const addButton = document.querySelector('#addButton');
-  const feedback = document.querySelector('.feedback');
-  const form = document.querySelector('.rss-form');
+export default (processState, i18nextInstance, domElements) => {
+  const {
+    inputField, addButton, feedback, form,
+  } = domElements;
   switch (processState) {
     case 'filling':
       addButton.disabled = false;
@@ -15,6 +14,9 @@ export default (processState, i18nextInstance) => {
       addButton.disabled = true;
       break;
     case 'finished':
+      feedback.innerHTML = i18nextInstance.t('messages.success');
+      feedback.classList.remove('text-danger');
+      feedback.classList.add('text-success');
       inputField.readOnly = false;
       addButton.disabled = false;
       form.reset();
@@ -25,6 +27,6 @@ export default (processState, i18nextInstance) => {
       addButton.disabled = false;
       break;
     default:
-      throw new Error(`${i18nextInstance.t('errors.unknownState')}: ${processState}`);
+      throw new Error('Unknown State');
   }
 };
