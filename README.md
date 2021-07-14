@@ -8,14 +8,31 @@ width="800" length="1000">
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6e986e51cfc804b1e44/maintainability)](https://codeclimate.com/github/vvvhatislove/frontend-project-lvl3/maintainability)
 
 ## Использование
-Данный RSS агрегатор задеплоен на <a href="https://vercel.com/">Vercel</a>.
-
-Для начала использования достаточно перейти по <a href="https://frontend-project-lvl3-ivory.vercel.app/">этой ссылке</a>.
-
 Приложение поддерживает автообновление постов – новые посты автоматически будут добавляться к вам в ленту.
 
+### Локально
+```bash
+# Клонировать репозиторий
+$ git clone https://github.com/vvvhatislove/frontend-project-lvl3.git
+
+# Установить зависимости
+$ make install
+
+# Билд проекта
+$ make build
+
+# Режим разработки
+$ make develop
+
+```
+
+### Деплой
+Данный RSS агрегатор задеплоен на <a target="_blank" href="https://vercel.com/">Vercel</a>.
+
+Для начала использования достаточно перейти по <a target="_blank" href="https://frontend-project-lvl3-ivory.vercel.app/">этой ссылке</a>.
+
 ## Благодарность
-Данное приложение выполнено в рамках обучения по профессии «Frontend-разработчик» на <a href="https://en.hexlet.io/pages/about">Hexlet</a>.  
-<a href=https://en.hexlet.io/pages/about>
+Данное приложение выполнено в рамках обучения по профессии «Frontend-разработчик» на <a target="_blank" href="https://en.hexlet.io/pages/about">Hexlet</a>.  
+<a target="_blank" href=https://en.hexlet.io/pages/about>
   <img src="https://pbs.twimg.com/profile_images/1104765658829602816/7wuM7zyo_400x400.png" alt="Hexlet logo" width="200" length="200">
 </a>
