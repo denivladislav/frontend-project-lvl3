@@ -11,8 +11,11 @@ const schema = yup.string()
   .url();
 
 export default (currentUrl) => schema.validate(currentUrl)
-  .then((e) => {
+  .catch((e) => {
+    console.log('Its a validation Error!');
+    console.log(e.message);
     const error = new Error();
     error.isValidationError = true;
     error.message = e.message;
+    throw error;
   });
