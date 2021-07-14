@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const postHandler = (watchedState, viewedPostId) => function handler() {
+const getPostClickHandler = (watchedState, viewedPostId) => function handler() {
   const oldPosts = watchedState.rssForm.rssData.posts;
   const clonedPosts = _.cloneDeep(oldPosts);
   const viewedPost = _.find((clonedPosts), { postId: viewedPostId });
@@ -38,7 +38,7 @@ export default (posts, i18nextInstance, watchedState) => {
     link.setAttribute('target', '_blank');
     link.setAttribute('rel', 'noopener noreferrer');
     link.innerHTML = `${post.title}`;
-    link.addEventListener('click', postHandler(watchedState, post.postId));
+    link.addEventListener('click', getPostClickHandler(watchedState, post.postId));
 
     const lookButton = document.createElement('button');
     lookButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
@@ -46,7 +46,7 @@ export default (posts, i18nextInstance, watchedState) => {
     lookButton.dataset.toggle = 'modal';
     lookButton.dataset.target = '#modal';
     lookButton.innerHTML = `${i18nextInstance.t('buttons.look')}`;
-    lookButton.addEventListener('click', postHandler(watchedState, post.postId));
+    lookButton.addEventListener('click', getPostClickHandler(watchedState, post.postId));
 
     postLi.append(link);
     postLi.append(lookButton);
