@@ -62,7 +62,9 @@ export default (watchedState) => {
         const oldPosts = watchedState.rssData.posts;
         if (oldPosts) {
           watchedState.rssData.posts = newPosts.concat(oldPosts);
-        } else watchedState.rssData.posts = newPosts;
+        } else {
+          watchedState.rssData.posts = newPosts;
+        }
 
         watchedState.processState = 'filling';
       })
