@@ -1,18 +1,21 @@
 import _ from 'lodash';
 
-const getPostClickHandler = (watchedState, viewedPostId) => function handler() {
-  const oldPosts = watchedState.rssForm.rssData.posts;
-  const clonedPosts = _.cloneDeep(oldPosts);
-  const viewedPost = _.find((clonedPosts), { postId: viewedPostId });
-  viewedPost.viewed = true;
-  watchedState.rssForm.rssData.posts = clonedPosts;
+const getPostClickHandler = (watchedState, viewedPostId) => {
+  const postClickHandler = () => {
+    const oldPosts = watchedState.rssData.posts;
+    const clonedPosts = _.cloneDeep(oldPosts);
+    const viewedPost = _.find((clonedPosts), { postId: viewedPostId });
+    viewedPost.viewed = true;
+    watchedState.rssData.posts = clonedPosts;
 
-  const newModal = {
-    title: viewedPost.title,
-    body: viewedPost.description,
-    url: viewedPost.url,
+    const newModal = {
+      title: viewedPost.title,
+      body: viewedPost.description,
+      url: viewedPost.url,
+    };
+    watchedState.currentModal = newModal;
   };
-  watchedState.rssForm.currentModal = newModal;
+  return postClickHandler;
 };
 
 export default (posts, i18nextInstance, watchedState) => {
@@ -34,7 +37,9 @@ export default (posts, i18nextInstance, watchedState) => {
     link.href = `${post.url}`;
     if (post.viewed) {
       link.classList.add('fw-normal', 'link-secondary');
-    } else link.classList.add('fw-bold', 'link-primary');
+    } else {
+      link.classList.add('fw-bold', 'link-primary');
+    }
     link.setAttribute('target', '_blank');
     link.setAttribute('rel', 'noopener noreferrer');
     link.innerHTML = `${post.title}`;

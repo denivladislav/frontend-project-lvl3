@@ -8,20 +8,20 @@ import modalRender from './render/modalRender.js';
 export default (state, i18nextInstance, domElements) => {
   const watchedState = onChange(state, (statePath, currValue) => {
     switch (statePath) {
-      case 'rssForm.processState':
+      case 'processState':
         processStateHandler(currValue, i18nextInstance, domElements);
         break;
-      case 'rssForm.rssData.feeds':
-        feedsRender(currValue, i18nextInstance, watchedState);
+      case 'rssData.feeds':
+        feedsRender(currValue, i18nextInstance, domElements);
         break;
-      case 'rssForm.rssData.posts':
-        postsRender(currValue, i18nextInstance, watchedState);
+      case 'rssData.posts':
+        postsRender(currValue, i18nextInstance, watchedState, domElements);
         break;
-      case 'rssForm.error':
-        errorRender(currValue, i18nextInstance);
+      case 'error':
+        errorRender(currValue, i18nextInstance, domElements);
         break;
-      case 'rssForm.currentModal':
-        modalRender(currValue, i18nextInstance, watchedState);
+      case 'currentModal':
+        modalRender(currValue, i18nextInstance, domElements);
         break;
       default:
         break;
