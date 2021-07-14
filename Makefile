@@ -4,11 +4,11 @@ install:
 publish:
 	npm publish --dry-run
 
-lint: 
+lint:
 	npx eslint .
-
-rss:
-	node bin/rss.js
 
 build:
 	npm run build
+
+develop:
+	npx webpack serve
