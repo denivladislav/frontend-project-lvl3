@@ -18,7 +18,7 @@ const getPostClickHandler = (watchedState, viewedPostId) => {
   return postClickHandler;
 };
 
-export default (posts, i18nextInstance, watchedState) => {
+const postsRender = (posts, i18nextInstance, watchedState) => {
   const postsDiv = document.querySelector('#posts');
   postsDiv.innerHTML = `
     <div class="card-body">
@@ -42,7 +42,7 @@ export default (posts, i18nextInstance, watchedState) => {
     }
     link.setAttribute('target', '_blank');
     link.setAttribute('rel', 'noopener noreferrer');
-    link.innerHTML = `${post.title}`;
+    link.textContent = `${post.title}`;
     link.addEventListener('click', getPostClickHandler(watchedState, post.postId));
 
     const lookButton = document.createElement('button');
@@ -50,7 +50,7 @@ export default (posts, i18nextInstance, watchedState) => {
     lookButton.setAttribute('type', 'button');
     lookButton.dataset.bsToggle = 'modal';
     lookButton.dataset.bsTarget = '#modal';
-    lookButton.innerHTML = `${i18nextInstance.t('buttons.look')}`;
+    lookButton.textContent = `${i18nextInstance.t('buttons.look')}`;
     lookButton.addEventListener('click', getPostClickHandler(watchedState, post.postId));
 
     postLi.append(link);
@@ -61,3 +61,5 @@ export default (posts, i18nextInstance, watchedState) => {
 
   postsDiv.append(postsUl);
 };
+
+export default postsRender;

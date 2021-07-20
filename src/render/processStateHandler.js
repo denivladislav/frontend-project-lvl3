@@ -9,12 +9,12 @@ export default (processState, i18nextInstance, domElements) => {
       break;
     case 'sending':
       inputField.classList.remove('border', 'border-danger');
-      feedback.innerHTML = '';
+      feedback.textContent = '';
       inputField.readOnly = true;
       addButton.disabled = true;
       break;
     case 'finished':
-      feedback.innerHTML = i18nextInstance.t('messages.success');
+      feedback.textContent = i18nextInstance.t('messages.success');
       feedback.classList.remove('text-danger');
       feedback.classList.add('text-success');
       inputField.readOnly = false;

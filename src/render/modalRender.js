@@ -3,9 +3,9 @@ export default (currentModal, i18nextInstance, domElements) => {
     modalTitle, modalBody, closeModalButton, readModalButton,
   } = domElements;
 
-  modalTitle.innerHTML = currentModal.title;
-  modalBody.innerHTML = currentModal.body;
-  closeModalButton.innerHTML = i18nextInstance.t('buttons.close');
-  readModalButton.innerHTML = i18nextInstance.t('buttons.read');
+  modalTitle.textContent = currentModal.title;
+  modalBody.textContent = currentModal.body;
+  closeModalButton.textContent = i18nextInstance.t('buttons.close');
+  readModalButton.textContent = i18nextInstance.t('buttons.read');
   readModalButton.href = currentModal.url;
 };

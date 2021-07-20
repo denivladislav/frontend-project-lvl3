@@ -4,16 +4,16 @@ export default (error, i18nextInstance, domElements) => {
   feedback.classList.add('text-danger');
   switch (true) {
     case error.name === 'ValidationError':
-      feedback.innerHTML = i18nextInstance.t(`errors.${error.message}`);
+      feedback.textContent = i18nextInstance.t(`errors.${error.message}`);
       break;
     case error.isRssParseError:
-      feedback.innerHTML = i18nextInstance.t('errors.invalidRss');
+      feedback.textContent = i18nextInstance.t('errors.invalidRss');
       break;
     case error.isAxiosError:
-      feedback.innerHTML = i18nextInstance.t('errors.networkError');
+      feedback.textContent = i18nextInstance.t('errors.networkError');
       break;
     default:
-      feedback.innerHTML = i18nextInstance.t('errors.unknownError');
+      feedback.textContent = i18nextInstance.t('errors.unknownError');
       break;
   }
 };
