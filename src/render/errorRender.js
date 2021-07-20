@@ -3,11 +3,8 @@ export default (error, i18nextInstance, domElements) => {
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
   switch (true) {
-    case error.isValidationError:
+    case error.name === 'ValidationError':
       feedback.innerHTML = i18nextInstance.t(`errors.${error.message}`);
-      break;
-    case error.isDuplicatedUrlError:
-      feedback.innerHTML = i18nextInstance.t('errors.duplicatedUrl');
       break;
     case error.isRssParseError:
       feedback.innerHTML = i18nextInstance.t('errors.invalidRss');

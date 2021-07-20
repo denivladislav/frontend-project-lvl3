@@ -6,14 +6,10 @@ yup.setLocale({
   },
 });
 
-const schema = yup.string()
-  .required('emptyUrl')
-  .url();
+export default (currentUrl, existingUrls) => {
+  const schema1 = yup.string().required('emptyUrl').url();
+  const schema2 = yup.mixed().notOneOf(existingUrls, 'duplicatedUrl');
 
-export default (currentUrl) => schema.validate(currentUrl)
-  .catch((e) => {
-    const error = new Error();
-    error.isValidationError = true;
-    error.message = e.message;
-    throw error;
-  });
+  return schema1.validate(currentUrl)
+    .then(() => schema2.validate(currentUrl));
+};
