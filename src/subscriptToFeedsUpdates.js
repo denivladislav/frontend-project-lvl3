@@ -47,8 +47,4 @@ const subscriptToFeedsUpdates = (state, delay) => {
     }), delay);
 };
 
-// const subscriptToFeedsUpdates = (watchedState, delay) => (
-//   setTimeout(() => updatePosts(watchedState))
-//     .finally(() => subscriptToFeedsUpdates(watchedState, delay)));
-
 export default subscriptToFeedsUpdates;
