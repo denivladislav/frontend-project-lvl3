@@ -12,7 +12,7 @@ const createPostElement = (post, i18nextInstance) => {
   link.setAttribute('target', '_blank');
   link.setAttribute('rel', 'noopener noreferrer');
   link.textContent = `${post.title}`;
-  link.dataset.id = post.postId;
+  link.dataset.id = post.id;
 
   const lookButton = document.createElement('button');
   lookButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
@@ -20,7 +20,7 @@ const createPostElement = (post, i18nextInstance) => {
   lookButton.dataset.bsToggle = 'modal';
   lookButton.dataset.bsTarget = '#modal';
   lookButton.textContent = `${i18nextInstance.t('buttons.look')}`;
-  lookButton.dataset.id = post.postId;
+  lookButton.dataset.id = post.id;
 
   postElement.append(link, lookButton);
   return postElement;

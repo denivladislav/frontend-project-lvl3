@@ -8,7 +8,7 @@ const postClickHandler = (event, watchedState) => {
 
   const oldPosts = watchedState.rssData.posts;
   const clonedPosts = _.cloneDeep(oldPosts);
-  const viewedPost = _.find((clonedPosts), { postId: elementId });
+  const viewedPost = _.find((clonedPosts), { id: elementId });
   viewedPost.viewed = true;
   watchedState.rssData.posts = clonedPosts;
 

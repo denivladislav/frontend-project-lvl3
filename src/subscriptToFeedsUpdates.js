@@ -8,7 +8,7 @@ const createNewPosts = (postsData, feedId) => {
     title: postData.title,
     description: postData.description,
     url: postData.url,
-    postId: _.uniqueId('post_'),
+    id: _.uniqueId('post_'),
     feedId,
     viewed: false,
   }));
@@ -28,7 +28,7 @@ const updatePosts = (watchedState) => {
         const loadedPosts = parsedData.postsData;
         const diffPostsArray = _.differenceWith(loadedPosts, oldPosts,
           (a, b) => a.title === b.title);
-        const newPosts = createNewPosts(diffPostsArray, feed.feedId);
+        const newPosts = createNewPosts(diffPostsArray, feed.id);
         watchedState.rssData.posts = [...newPosts, ...oldPosts];
       });
     return promise;

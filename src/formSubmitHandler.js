@@ -8,7 +8,7 @@ const createNewFeed = (feedData, url) => ({
   title: feedData.title,
   description: feedData.description,
   url,
-  feedId: _.uniqueId('feed_'),
+  id: _.uniqueId('feed_'),
 });
 
 const createNewPosts = (postsData, feedId) => {
@@ -16,7 +16,7 @@ const createNewPosts = (postsData, feedId) => {
     title: postData.title,
     description: postData.description,
     url: postData.url,
-    postId: _.uniqueId('post_'),
+    id: _.uniqueId('post_'),
     feedId,
     viewed: false,
   }));
@@ -39,7 +39,7 @@ const updateState = (parsedData, watchedState, url) => {
   const oldFeeds = watchedState.rssData.feeds;
   watchedState.rssData.feeds = [newFeed, ...oldFeeds];
 
-  const newPosts = createNewPosts(parsedData.postsData, newFeed.feedId);
+  const newPosts = createNewPosts(parsedData.postsData, newFeed.id);
   const oldPosts = watchedState.rssData.posts;
   watchedState.rssData.posts = [...newPosts, ...oldPosts];
 };
