@@ -20,6 +20,7 @@ export default (processState, i18nextInstance, domElements) => {
       inputField.readOnly = false;
       addButton.disabled = false;
       form.reset();
+      inputField.focus();
       break;
     case 'failed':
       inputField.classList.add('border', 'border-danger');
