@@ -26,8 +26,8 @@ const createPostElement = (post, i18nextInstance) => {
   return postElement;
 };
 
-const postsRender = (posts, i18nextInstance, watchedState) => {
-  const postsCard = document.querySelector('#posts');
+const postsRender = (posts, i18nextInstance, domElements) => {
+  const postsCard = domElements.posts;
   postsCard.innerHTML = `
     <div class="card-body">
         <h2 class="h4 m-0">${i18nextInstance.t('headers.posts')}</h2>
@@ -37,7 +37,7 @@ const postsRender = (posts, i18nextInstance, watchedState) => {
   const postsList = document.createElement('ul');
   postsList.classList.add('list-group', 'border-0', 'rounded-0');
 
-  const postsElements = posts.map((post) => createPostElement(post, i18nextInstance, watchedState));
+  const postsElements = posts.map((post) => createPostElement(post, i18nextInstance));
   postsList.append(...postsElements);
 
   postsCard.append(postsList);

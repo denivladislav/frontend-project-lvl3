@@ -13,7 +13,7 @@ export default (state, i18nextInstance, domElements) => {
         feedsRender(currValue, i18nextInstance, domElements);
         break;
       case 'rssData.posts':
-        postsRender(currValue, i18nextInstance, watchedState, domElements);
+        postsRender(currValue, i18nextInstance, domElements);
         break;
       case 'error':
         errorRender(currValue, i18nextInstance, domElements);
