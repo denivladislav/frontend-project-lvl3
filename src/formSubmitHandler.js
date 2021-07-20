@@ -47,7 +47,6 @@ const handleFormSubmit = (event, watchedState) => {
     .then((response) => parseRss(response.data.contents))
     .then((parsedData) => {
       watchedState.processState = 'finished';
-      watchedState.currentFeedback = { type: 'successMessage' };
 
       const newFeed = createNewFeed(parsedData.feedData, url);
       const oldFeeds = watchedState.rssData.feeds;
