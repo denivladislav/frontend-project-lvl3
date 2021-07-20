@@ -43,19 +43,11 @@ const handleFormSubmit = (event, watchedState) => {
 
       const newFeed = createNewFeed(parsedData.feedData, url);
       const oldFeeds = watchedState.rssData.feeds;
-      if (oldFeeds) {
-        watchedState.rssData.feeds = [newFeed].concat(oldFeeds);
-      } else {
-        watchedState.rssData.feeds = [newFeed];
-      }
+      watchedState.rssData.feeds = [newFeed, ...oldFeeds];
 
       const newPosts = createNewPosts(parsedData.postsData, newFeed.feedId);
       const oldPosts = watchedState.rssData.posts;
-      if (oldPosts) {
-        watchedState.rssData.posts = newPosts.concat(oldPosts);
-      } else {
-        watchedState.rssData.posts = newPosts;
-      }
+      watchedState.rssData.posts = [...newPosts, ...oldPosts];
 
       watchedState.processState = 'filling';
     })

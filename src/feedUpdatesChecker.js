@@ -29,11 +29,7 @@ const checkFeedUpdates = (watchedState, delay) => {
         const diffPostsArray = _.differenceWith(loadedPosts, oldPosts,
           (a, b) => a.title === b.title);
         const newPosts = createNewPosts(diffPostsArray, feed.feedId);
-        if (oldPosts) {
-          watchedState.rssData.posts = newPosts.concat(oldPosts);
-        } else {
-          watchedState.rssData.posts = newPosts;
-        }
+        watchedState.rssData.posts = [...newPosts, ...oldPosts];
       });
     return promise;
   });
