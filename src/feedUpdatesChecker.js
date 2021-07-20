@@ -20,7 +20,8 @@ const checkFeedUpdates = (watchedState, delay) => {
   const { feeds } = watchedState.rssData;
   const promises = feeds.map((feed) => {
     const { url } = feed;
-    const promise = axios.get(getProxyForUrl(url))
+    const proxyForUrl = getProxyForUrl(url);
+    const promise = axios.get(proxyForUrl)
       .then((response) => parseRss(response.data.contents))
       .then((parsedData) => {
         const oldPosts = watchedState.rssData.posts;
@@ -40,7 +41,6 @@ const checkFeedUpdates = (watchedState, delay) => {
     .catch((error) => {
       watchedState.processState = 'failed';
       watchedState.error = error;
-      watchedState.processState = 'filling';
     })
     .finally(() => {
       setTimeout(() => checkFeedUpdates(watchedState, delay), delay);

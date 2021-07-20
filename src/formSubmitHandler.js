@@ -33,7 +33,8 @@ const handleFormSubmit = (event, watchedState) => {
   validateUrl(url, existingUrls)
     .then(() => {
       watchedState.processState = 'sending';
-      const axiosPromise = axios.get(getProxyForUrl(url));
+      const proxyForUrl = getProxyForUrl(url);
+      const axiosPromise = axios.get(proxyForUrl);
       return Promise.resolve(axiosPromise);
     })
     .then((response) => parseRss(response.data.contents))
@@ -61,7 +62,6 @@ const handleFormSubmit = (event, watchedState) => {
     .catch((error) => {
       watchedState.processState = 'failed';
       watchedState.error = error;
-      watchedState.processState = 'filling';
     });
 };
 

@@ -25,6 +25,7 @@ export default (processState, i18nextInstance, domElements) => {
       inputField.classList.add('border', 'border-danger');
       inputField.readOnly = false;
       addButton.disabled = false;
+      inputField.focus();
       break;
     default:
       throw new Error('Unknown State');
