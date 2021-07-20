@@ -5,11 +5,15 @@ module.exports = {
   entry: {
     index: './src/index.js',
   },
+  mode: 'development',
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ],
       },
     ],
   },

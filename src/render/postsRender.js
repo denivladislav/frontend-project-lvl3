@@ -48,8 +48,8 @@ export default (posts, i18nextInstance, watchedState) => {
     const lookButton = document.createElement('button');
     lookButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     lookButton.setAttribute('type', 'button');
-    lookButton.dataset.toggle = 'modal';
-    lookButton.dataset.target = '#modal';
+    lookButton.dataset.bsToggle = 'modal';
+    lookButton.dataset.bsTarget = '#modal';
     lookButton.innerHTML = `${i18nextInstance.t('buttons.look')}`;
     lookButton.addEventListener('click', getPostClickHandler(watchedState, post.postId));
 
