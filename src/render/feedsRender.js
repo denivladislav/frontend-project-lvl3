@@ -14,8 +14,7 @@ export default (feeds, i18nextInstance, domElements) => {
         <h3 class="h6 m-0">${feed.title}</h3>
         <p class="m-0 small text-black-50">${feed.description}</p>
       </li>
-    `)
-    .join('\n');
+    `);
 
   feedsDiv.append(feedsUl);
 };
