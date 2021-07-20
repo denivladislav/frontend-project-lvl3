@@ -24,33 +24,36 @@ const createNewPosts = (postsData, feedId) => {
   return newPosts;
 };
 
+const getRss = (url, watchedState) => {
+  watchedState.processState = 'sending';
+
+  const proxyForUrl = getProxyForUrl(url);
+  const axiosPromise = axios.get(proxyForUrl);
+  return axiosPromise;
+};
+
+const updateState = (parsedData, watchedState, url) => {
+  watchedState.processState = 'finished';
+
+  const newFeed = createNewFeed(parsedData.feedData, url);
+  const oldFeeds = watchedState.rssData.feeds;
+  watchedState.rssData.feeds = [newFeed, ...oldFeeds];
+
+  const newPosts = createNewPosts(parsedData.postsData, newFeed.feedId);
+  const oldPosts = watchedState.rssData.posts;
+  watchedState.rssData.posts = [...newPosts, ...oldPosts];
+};
+
 const handleFormSubmit = (event, watchedState) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const url = formData.get('url-input');
-  const existingUrls = watchedState.rssData.feeds
-    .map((feed) => feed.url);
+  const existingUrls = watchedState.rssData.feeds.map((feed) => feed.url);
+
   validateUrl(url, existingUrls)
-    .then(() => {
-      watchedState.processState = 'sending';
-      const proxyForUrl = getProxyForUrl(url);
-      const axiosPromise = axios.get(proxyForUrl);
-      return Promise.resolve(axiosPromise);
-    })
+    .then(() => getRss(url, watchedState))
     .then((response) => parseRss(response.data.contents))
-    .then((parsedData) => {
-      watchedState.processState = 'finished';
-
-      const newFeed = createNewFeed(parsedData.feedData, url);
-      const oldFeeds = watchedState.rssData.feeds;
-      watchedState.rssData.feeds = [newFeed, ...oldFeeds];
-
-      const newPosts = createNewPosts(parsedData.postsData, newFeed.feedId);
-      const oldPosts = watchedState.rssData.posts;
-      watchedState.rssData.posts = [...newPosts, ...oldPosts];
-
-      watchedState.processState = 'filling';
-    })
+    .then((parsedData) => updateState(parsedData, watchedState, url))
     .catch((error) => {
       watchedState.processState = 'failed';
       watchedState.error = error;
