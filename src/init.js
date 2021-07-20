@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import translationRU from './locales/ru.json';
 import watch from './view.js';
 import handleFormSubmit from './formSubmitHandler.js';
-import checkFeedUpdates from './feedUpdatesChecker.js';
+import subscriptToFeedsUpdates from './subscriptToFeedsUpdates.js';
 
 export default () => {
   const i18nextInstance = i18next.createInstance();
@@ -45,6 +45,6 @@ export default () => {
 
       const { form } = domElements;
       form.addEventListener('submit', (event) => handleFormSubmit(event, watchedState));
-      setTimeout(() => checkFeedUpdates(watchedState, delay), delay);
+      setTimeout(() => subscriptToFeedsUpdates(watchedState, delay), delay);
     });
 };
