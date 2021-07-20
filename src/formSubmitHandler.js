@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import parseRss from './rssParser.js';
-import getProxy from './proxy.js';
+import getProxyForUrl from './getProxyForUrl.js';
 import validateUrl from './urlValidator.js';
 
 const createNewFeed = (feedData, url) => ({
@@ -32,18 +32,8 @@ const handleFormSubmit = (event, watchedState) => {
     .map((feed) => feed.url);
   validateUrl(url, existingUrls)
     .then(() => {
-      const feedUrls = watchedState.rssData.feeds
-        .map((feed) => feed.url);
-      if (_.includes(feedUrls, url)) {
-        const error = new Error();
-        error.isDuplicatedUrlError = true;
-        throw error;
-      }
-    })
-    .then(() => {
       watchedState.processState = 'sending';
-      const proxy = getProxy();
-      const axiosPromise = axios.get(proxy, { params: { url, disableCache: true } });
+      const axiosPromise = axios.get(getProxyForUrl(url));
       return Promise.resolve(axiosPromise);
     })
     .then((response) => parseRss(response.data.contents))
