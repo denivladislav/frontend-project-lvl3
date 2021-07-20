@@ -3,6 +3,7 @@ import translationRU from './locales/ru.json';
 import watch from './view.js';
 import handleFormSubmit from './formSubmitHandler.js';
 import subscriptToFeedsUpdates from './subscriptToFeedsUpdates.js';
+import handlePostClick from './postClickHandler';
 
 export default () => {
   const i18nextInstance = i18next.createInstance();
@@ -43,8 +44,9 @@ export default () => {
 
       const watchedState = watch(state, i18nextInstance, domElements);
 
-      const { form } = domElements;
+      const { form, posts } = domElements;
       form.addEventListener('submit', (event) => handleFormSubmit(event, watchedState));
+      posts.addEventListener('click', (event) => handlePostClick(event, watchedState));
       setTimeout(() => subscriptToFeedsUpdates(watchedState, delay), delay);
     });
 };
