@@ -1,9 +1,7 @@
 import onChange from 'on-change';
-import processStateHandler from './render/processStateHandler.js';
-import feedsRender from './render/feedsRender.js';
-import postsRender from './render/postsRender.js';
-import errorRender from './render/errorRender.js';
-import modalRender from './render/modalRender.js';
+import {
+  processStateHandler, feedsRender, postsRender, errorRender, modalRender,
+} from './render/index.js';
 
 export default (state, i18nextInstance, domElements) => {
   const watchedState = onChange(state, (statePath, currValue) => {
