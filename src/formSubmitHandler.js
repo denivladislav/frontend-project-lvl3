@@ -28,7 +28,9 @@ const handleFormSubmit = (event, watchedState) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const url = formData.get('url-input');
-  validateUrl(url)
+  const existingUrls = watchedState.rssData.feeds
+    .map((feed) => feed.url);
+  validateUrl(url, existingUrls)
     .then(() => {
       const feedUrls = watchedState.rssData.feeds
         .map((feed) => feed.url);
