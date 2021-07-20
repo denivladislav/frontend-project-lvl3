@@ -43,7 +43,7 @@ export default () => {
 
       const watchedState = watch(state, i18nextInstance, domElements);
 
-      const form = document.querySelector('.rss-form');
+      const { form } = domElements;
       form.addEventListener('submit', (event) => handleFormSubmit(event, watchedState));
       setTimeout(() => checkFeedUpdates(watchedState, delay), delay);
     });
