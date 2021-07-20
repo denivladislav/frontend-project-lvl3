@@ -16,7 +16,7 @@ const createNewPosts = (postsData, feedId) => {
   return newPosts;
 };
 
-const checkFeedUpdates = (watchedState, delay) => {
+const updatePosts = (watchedState) => {
   const { feeds } = watchedState.rssData;
   const promises = feeds.map((feed) => {
     const { url } = feed;
@@ -33,14 +33,18 @@ const checkFeedUpdates = (watchedState, delay) => {
       });
     return promise;
   });
-  Promise.all(promises)
+  return Promise.all(promises)
     .catch((error) => {
       watchedState.processState = 'failed';
       watchedState.error = error;
-    })
-    .finally(() => {
-      setTimeout(() => checkFeedUpdates(watchedState, delay), delay);
     });
 };
 
-export default checkFeedUpdates;
+const subscriptToFeedsUpdates = (watchedState, delay) => {
+  setTimeout(() => updatePosts(watchedState)
+    .finally(() => {
+      subscriptToFeedsUpdates(watchedState);
+    }), delay);
+};
+
+export default subscriptToFeedsUpdates;
