@@ -1,24 +1,4 @@
-import _ from 'lodash';
-
-const getPostClickHandler = (watchedState, viewedPostId) => {
-  const postClickHandler = () => {
-    const oldPosts = watchedState.rssData.posts;
-    const clonedPosts = _.cloneDeep(oldPosts);
-    const viewedPost = _.find((clonedPosts), { postId: viewedPostId });
-    viewedPost.viewed = true;
-    watchedState.rssData.posts = clonedPosts;
-
-    const newModal = {
-      title: viewedPost.title,
-      body: viewedPost.description,
-      url: viewedPost.url,
-    };
-    watchedState.currentModal = newModal;
-  };
-  return postClickHandler;
-};
-
-const createPostElement = (post, i18nextInstance, watchedState) => {
+const createPostElement = (post, i18nextInstance) => {
   const postElement = document.createElement('li');
   postElement.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
@@ -32,7 +12,7 @@ const createPostElement = (post, i18nextInstance, watchedState) => {
   link.setAttribute('target', '_blank');
   link.setAttribute('rel', 'noopener noreferrer');
   link.textContent = `${post.title}`;
-  link.addEventListener('click', getPostClickHandler(watchedState, post.postId));
+  link.dataset.id = post.postId;
 
   const lookButton = document.createElement('button');
   lookButton.classList.add('btn', 'btn-outline-primary', 'btn-sm');
@@ -40,7 +20,7 @@ const createPostElement = (post, i18nextInstance, watchedState) => {
   lookButton.dataset.bsToggle = 'modal';
   lookButton.dataset.bsTarget = '#modal';
   lookButton.textContent = `${i18nextInstance.t('buttons.look')}`;
-  lookButton.addEventListener('click', getPostClickHandler(watchedState, post.postId));
+  lookButton.dataset.id = post.postId;
 
   postElement.append(link, lookButton);
   return postElement;
