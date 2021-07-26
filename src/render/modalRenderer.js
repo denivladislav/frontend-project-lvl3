@@ -1,10 +1,11 @@
-export default (modal, i18nextInstance, domElements) => {
+export default (modal, i18nextInstance, domElements, watchedState) => {
   const {
     modalTitle, modalBody, closeModalButton, readModalButton,
   } = domElements;
-  modalTitle.textContent = modal.title;
-  modalBody.textContent = modal.description;
+  const currentPost = watchedState.rssData.posts.find((post) => post.id === modal.postId);
+  modalTitle.textContent = currentPost.title;
+  modalBody.textContent = currentPost.description;
   closeModalButton.textContent = i18nextInstance.t('buttons.close');
   readModalButton.textContent = i18nextInstance.t('buttons.read');
-  readModalButton.href = modal.url;
+  readModalButton.href = currentPost.url;
 };
