@@ -1,7 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
 import parseRss from './rssParser.js';
-import getProxyForUrl from './getProxyForUrl.js';
+import getProxyUrl from './getProxyUrl.js';
 import validateUrl from './urlValidator.js';
 
 const createNewFeed = (data, url) => ({
@@ -25,8 +25,8 @@ const createNewPosts = (data, feedId) => {
 };
 
 const getRss = (url) => {
-  const proxyForUrl = getProxyForUrl(url);
-  const axiosPromise = axios.get(proxyForUrl);
+  const proxyUrl = getProxyUrl(url);
+  const axiosPromise = axios.get(proxyUrl);
   return axiosPromise;
 };
 
