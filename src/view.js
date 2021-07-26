@@ -1,17 +1,18 @@
 import onChange from 'on-change';
 import {
-  processStateHandler, feedsRender, postsRender, errorRender, modalRender, viewedPostsRender,
+  processStateHandler, feedsRenderer, postsRenderer,
+  errorRenderer, modalRenderer, viewedPostsRenderer,
 } from './render/index.js';
 
 export default (state, i18nextInstance, domElements) => {
   const watchedState = onChange(state, (statePath, currValue) => {
     const viewsMap = {
       processState: processStateHandler,
-      'rssData.feeds': feedsRender,
-      'rssData.posts': postsRender,
-      'uiState.modal': modalRender,
-      'uiState.viewedPosts': viewedPostsRender,
-      error: errorRender,
+      'rssData.feeds': feedsRenderer,
+      'rssData.posts': postsRenderer,
+      'uiState.modal': modalRenderer,
+      'uiState.viewedPosts': viewedPostsRenderer,
+      error: errorRenderer,
     };
     viewsMap[statePath](currValue, i18nextInstance, domElements, state);
   });
