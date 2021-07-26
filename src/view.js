@@ -13,7 +13,6 @@ export default (state, i18nextInstance, domElements) => {
       'uiState.viewedPosts': viewedPostsRender,
       error: errorRender,
     };
-    console.log(state);
     viewsMap[statePath](currValue, i18nextInstance, domElements, state);
   });
   return watchedState;

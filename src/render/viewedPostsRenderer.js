@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const viewedPostsRender = (viewedPosts, _i18nextInstance, domElements) => {
+export const viewedPostsRenderer = (viewedPosts, _i18nextInstance, domElements) => {
   const links = domElements.posts.querySelectorAll('a');
   links.forEach((link) => {
     if (_.includes(viewedPosts, link.dataset.id)) {
@@ -9,5 +9,3 @@ const viewedPostsRender = (viewedPosts, _i18nextInstance, domElements) => {
     }
   });
 };
-
-export default viewedPostsRender;

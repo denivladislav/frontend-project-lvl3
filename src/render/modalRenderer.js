@@ -1,4 +1,4 @@
-export default (currentModal, i18nextInstance, domElements) => {
+export const modalRenderer = (currentModal, i18nextInstance, domElements) => {
   const {
     modalTitle, modalBody, closeModalButton, readModalButton,
   } = domElements;

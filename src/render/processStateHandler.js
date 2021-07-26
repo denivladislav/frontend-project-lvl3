@@ -1,4 +1,4 @@
-export default (processState, i18nextInstance, domElements) => {
+export const processStateHandler = (processState, i18nextInstance, domElements) => {
   const {
     inputField, addButton, feedback, form,
   } = domElements;

@@ -5,7 +5,7 @@ const createPostElement = (post, i18nextInstance, watchedState) => {
   postElement.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
   const link = document.createElement('a');
-  link.href = `${post.url}`;
+  link.href = post.url;
   if (!_.includes(watchedState.uiState.viewedPosts, post.id)) {
     link.classList.add('fw-bold', 'link-primary');
   } else {
@@ -13,7 +13,7 @@ const createPostElement = (post, i18nextInstance, watchedState) => {
   }
   link.setAttribute('target', '_blank');
   link.setAttribute('rel', 'noopener noreferrer');
-  link.textContent = `${post.title}`;
+  link.textContent = post.title;
   link.dataset.id = post.id;
 
   const lookButton = document.createElement('button');
@@ -28,9 +28,8 @@ const createPostElement = (post, i18nextInstance, watchedState) => {
   return postElement;
 };
 
-const postsRender = (posts, i18nextInstance, domElements, watchedState) => {
-  const postsCard = domElements.posts;
-  postsCard.innerHTML = `
+export const postsRenderer = (posts, i18nextInstance, domElements, watchedState) => {
+  domElements.posts.innerHTML = `
     <div class="card-body">
         <h2 class="h4 m-0">${i18nextInstance.t('headers.posts')}</h2>
     </div>    
@@ -42,7 +41,5 @@ const postsRender = (posts, i18nextInstance, domElements, watchedState) => {
   const postsElements = posts.map((post) => createPostElement(post, i18nextInstance, watchedState));
   postsList.append(...postsElements);
 
-  postsCard.append(postsList);
+  domElements.posts.append(postsList);
 };
-
-export default postsRender;

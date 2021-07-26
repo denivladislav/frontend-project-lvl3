@@ -1,6 +1,5 @@
-export default (feeds, i18nextInstance, domElements) => {
-  const feedsCard = domElements.feeds;
-  feedsCard.innerHTML = `
+export const feedsRenderer = (feeds, i18nextInstance, domElements) => {
+  domElements.feeds.innerHTML = `
     <div class="card-body">
       <h2 class="h4 m-0">${i18nextInstance.t('headers.feeds')}</h2>
     </div>  
@@ -16,5 +15,5 @@ export default (feeds, i18nextInstance, domElements) => {
     `)
     .join('\n');
 
-  feedsCard.append(feedsList);
+  domElements.feeds.append(feedsList);
 };

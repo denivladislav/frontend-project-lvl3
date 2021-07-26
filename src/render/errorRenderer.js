@@ -11,7 +11,7 @@ const getErrorMessage = (error, i18nextInstance) => {
   return i18nextInstance.t('errors.unknownError');
 };
 
-export default (error, i18nextInstance, domElements) => {
+export const errorRenderer = (error, i18nextInstance, domElements) => {
   const { feedback } = domElements;
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
