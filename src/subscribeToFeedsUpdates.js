@@ -24,13 +24,10 @@ const updatePosts = (watchedState) => {
           (a, b) => a.title === b.title);
         const newPosts = createNewPosts(diffPostsArray, feed.id);
         watchedState.rssData.posts = [...newPosts, ...oldPosts];
-      });
+      })
+      .catch((error) => console.error(error));
   });
-  return Promise.all(promises)
-    .catch((error) => {
-      watchedState.processState = 'failed';
-      watchedState.error = error;
-    });
+  return Promise.all(promises);
 };
 
 const subscribeToFeedsUpdates = (state, delay) => {
