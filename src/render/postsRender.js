@@ -1,13 +1,15 @@
-const createPostElement = (post, i18nextInstance) => {
+import _ from 'lodash';
+
+const createPostElement = (post, i18nextInstance, watchedState) => {
   const postElement = document.createElement('li');
   postElement.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
 
   const link = document.createElement('a');
   link.href = `${post.url}`;
-  if (post.viewed) {
-    link.classList.add('fw-normal', 'link-secondary');
-  } else {
+  if (!_.includes(watchedState.uiState.viewedPosts, post.id)) {
     link.classList.add('fw-bold', 'link-primary');
+  } else {
+    link.classList.add('fw-normal', 'link-secondary');
   }
   link.setAttribute('target', '_blank');
   link.setAttribute('rel', 'noopener noreferrer');
@@ -26,7 +28,7 @@ const createPostElement = (post, i18nextInstance) => {
   return postElement;
 };
 
-const postsRender = (posts, i18nextInstance, domElements) => {
+const postsRender = (posts, i18nextInstance, domElements, watchedState) => {
   const postsCard = domElements.posts;
   postsCard.innerHTML = `
     <div class="card-body">
@@ -37,7 +39,7 @@ const postsRender = (posts, i18nextInstance, domElements) => {
   const postsList = document.createElement('ul');
   postsList.classList.add('list-group', 'border-0', 'rounded-0');
 
-  const postsElements = posts.map((post) => createPostElement(post, i18nextInstance));
+  const postsElements = posts.map((post) => createPostElement(post, i18nextInstance, watchedState));
   postsList.append(...postsElements);
 
   postsCard.append(postsList);

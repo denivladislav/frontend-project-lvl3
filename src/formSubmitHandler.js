@@ -24,9 +24,7 @@ const createNewPosts = (data, feedId) => {
   return newPosts;
 };
 
-const getRss = (url, watchedState) => {
-  watchedState.processState = 'sending';
-
+const getRss = (url) => {
   const proxyForUrl = getProxyForUrl(url);
   const axiosPromise = axios.get(proxyForUrl);
   return axiosPromise;
@@ -46,6 +44,7 @@ const updateState = (parsedData, watchedState, url) => {
 
 const handleFormSubmit = (event, watchedState) => {
   event.preventDefault();
+  watchedState.processState = 'sending';
   const formData = new FormData(event.target);
   const url = formData.get('url-input');
   const existingUrls = watchedState.rssData.feeds.map((feed) => feed.url);
@@ -57,7 +56,7 @@ const handleFormSubmit = (event, watchedState) => {
     return;
   }
 
-  getRss(url, watchedState)
+  getRss(url)
     .then((response) => parseRss(response.data.contents))
     .then((parsedData) => updateState(parsedData, watchedState, url))
     .catch((error) => {

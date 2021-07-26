@@ -1,6 +1,6 @@
 import onChange from 'on-change';
 import {
-  processStateHandler, feedsRender, postsRender, errorRender, modalRender,
+  processStateHandler, feedsRender, postsRender, errorRender, modalRender, viewedPostsRender,
 } from './render/index.js';
 
 export default (state, i18nextInstance, domElements) => {
@@ -9,10 +9,12 @@ export default (state, i18nextInstance, domElements) => {
       processState: processStateHandler,
       'rssData.feeds': feedsRender,
       'rssData.posts': postsRender,
+      'uiState.modal': modalRender,
+      'uiState.viewedPosts': viewedPostsRender,
       error: errorRender,
-      currentModal: modalRender,
     };
-    viewsMap[statePath](currValue, i18nextInstance, domElements);
+    console.log(state);
+    viewsMap[statePath](currValue, i18nextInstance, domElements, state);
   });
   return watchedState;
 };

@@ -23,7 +23,10 @@ export default () => {
           feeds: [],
           posts: [],
         },
-        currentModal: {},
+        uiState: {
+          modal: {},
+          viewedPosts: [],
+        },
         error: null,
       };
 

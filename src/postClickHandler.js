@@ -6,18 +6,16 @@ const postClickHandler = (event, watchedState) => {
     return;
   }
 
-  const oldPosts = watchedState.rssData.posts;
-  const clonedPosts = _.cloneDeep(oldPosts);
-  const viewedPost = _.find((clonedPosts), { id: elementId });
-  viewedPost.viewed = true;
-  watchedState.rssData.posts = clonedPosts;
+  const { posts } = watchedState.rssData;
+  const newViewedPost = _.find(posts, { id: elementId });
+  const oldViewedPosts = watchedState.uiState.viewedPosts;
+  watchedState.uiState.viewedPosts = [...oldViewedPosts, newViewedPost.id];
 
-  const newModal = {
-    title: viewedPost.title,
-    body: viewedPost.description,
-    url: viewedPost.url,
+  watchedState.uiState.modal = {
+    title: newViewedPost.title,
+    body: newViewedPost.description,
+    url: newViewedPost.url,
   };
-  watchedState.currentModal = newModal;
 };
 
 export default postClickHandler;
