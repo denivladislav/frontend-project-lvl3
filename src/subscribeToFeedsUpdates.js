@@ -40,11 +40,11 @@ const updatePosts = (watchedState) => {
     });
 };
 
-const subscriptToFeedsUpdates = (state, delay) => {
+const subscribeToFeedsUpdates = (state, delay) => {
   setTimeout(() => updatePosts(state)
     .finally(() => {
-      subscriptToFeedsUpdates(state, delay);
+      subscribeToFeedsUpdates(state, delay);
     }), delay);
 };
 
-export default subscriptToFeedsUpdates;
+export default subscribeToFeedsUpdates;
