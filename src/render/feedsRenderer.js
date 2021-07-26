@@ -1,4 +1,4 @@
-export const feedsRenderer = (feeds, i18nextInstance, domElements) => {
+export default (feeds, i18nextInstance, domElements) => {
   domElements.feeds.innerHTML = `
     <div class="card-body">
       <h2 class="h4 m-0">${i18nextInstance.t('headers.feeds')}</h2>

@@ -28,7 +28,7 @@ const createPostElement = (post, i18nextInstance, watchedState) => {
   return postElement;
 };
 
-export const postsRenderer = (posts, i18nextInstance, domElements, watchedState) => {
+const postsRenderer = (posts, i18nextInstance, domElements, watchedState) => {
   domElements.posts.innerHTML = `
     <div class="card-body">
         <h2 class="h4 m-0">${i18nextInstance.t('headers.posts')}</h2>
@@ -43,3 +43,5 @@ export const postsRenderer = (posts, i18nextInstance, domElements, watchedState)
 
   domElements.posts.append(postsList);
 };
+
+export default postsRenderer;
