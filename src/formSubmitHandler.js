@@ -11,23 +11,18 @@ const createNewFeed = (data, url) => ({
   id: _.uniqueId('feed_'),
 });
 
-const createNewPosts = (data, feedId) => {
-  const newPosts = data.items.map((item) => ({
-    title: item.title,
-    description: item.description,
-    url: item.url,
-    id: _.uniqueId('post_'),
-    feedId,
-    viewed: false,
-  }));
-
-  return newPosts;
-};
+const createNewPosts = (data, feedId) => data.items.map((item) => ({
+  title: item.title,
+  description: item.description,
+  url: item.url,
+  id: _.uniqueId('post_'),
+  feedId,
+  viewed: false,
+}));
 
 const getFeedData = (url) => {
   const proxyUrl = getProxyUrl(url);
-  const axiosPromise = axios.get(proxyUrl);
-  return axiosPromise;
+  return axios.get(proxyUrl);
 };
 
 const updateState = (parsedData, watchedState, url) => {

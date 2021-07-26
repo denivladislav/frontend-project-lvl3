@@ -3,25 +3,21 @@ import axios from 'axios';
 import getProxyUrl from './getProxyUrl.js';
 import parseFeedData from './rssParser.js';
 
-const createNewPosts = (data, feedId) => {
-  const newPosts = data.map((item) => ({
-    title: item.title,
-    description: item.description,
-    url: item.url,
-    id: _.uniqueId('post_'),
-    feedId,
-    viewed: false,
-  }));
-
-  return newPosts;
-};
+const createNewPosts = (data, feedId) => data.map((item) => ({
+  title: item.title,
+  description: item.description,
+  url: item.url,
+  id: _.uniqueId('post_'),
+  feedId,
+  viewed: false,
+}));
 
 const updatePosts = (watchedState) => {
   const { feeds } = watchedState.rssData;
   const promises = feeds.map((feed) => {
     const { url } = feed;
     const proxyUrl = getProxyUrl(url);
-    const promise = axios.get(proxyUrl)
+    return axios.get(proxyUrl)
       .then((response) => parseFeedData(response.data.contents))
       .then((parsedData) => {
         const oldPosts = watchedState.rssData.posts;
@@ -31,7 +27,6 @@ const updatePosts = (watchedState) => {
         const newPosts = createNewPosts(diffPostsArray, feed.id);
         watchedState.rssData.posts = [...newPosts, ...oldPosts];
       });
-    return promise;
   });
   return Promise.all(promises)
     .catch((error) => {
