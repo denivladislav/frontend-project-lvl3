@@ -50,8 +50,14 @@ const handleFormSubmit = (event, watchedState) => {
   const url = formData.get('url-input');
   const existingUrls = watchedState.rssData.feeds.map((feed) => feed.url);
 
-  validateUrl(url, existingUrls)
-    .then(() => getRss(url, watchedState))
+  const validationError = validateUrl(url, existingUrls);
+  if (validationError) {
+    watchedState.processState = 'failed';
+    watchedState.error = validationError;
+    return;
+  }
+
+  getRss(url, watchedState)
     .then((response) => parseRss(response.data.contents))
     .then((parsedData) => updateState(parsedData, watchedState, url))
     .catch((error) => {

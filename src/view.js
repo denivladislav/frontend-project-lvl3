@@ -5,25 +5,14 @@ import {
 
 export default (state, i18nextInstance, domElements) => {
   const watchedState = onChange(state, (statePath, currValue) => {
-    switch (statePath) {
-      case 'processState':
-        processStateHandler(currValue, i18nextInstance, domElements);
-        break;
-      case 'rssData.feeds':
-        feedsRender(currValue, i18nextInstance, domElements);
-        break;
-      case 'rssData.posts':
-        postsRender(currValue, i18nextInstance, domElements);
-        break;
-      case 'error':
-        errorRender(currValue, i18nextInstance, domElements);
-        break;
-      case 'currentModal':
-        modalRender(currValue, i18nextInstance, domElements);
-        break;
-      default:
-        break;
-    }
+    const viewsMap = {
+      processState: processStateHandler,
+      'rssData.feeds': feedsRender,
+      'rssData.posts': postsRender,
+      error: errorRender,
+      currentModal: modalRender,
+    };
+    viewsMap[statePath](currValue, i18nextInstance, domElements);
   });
   return watchedState;
 };
