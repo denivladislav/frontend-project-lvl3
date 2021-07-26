@@ -27,9 +27,4 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
-  node: {
-    global: false,
-    __filename: false,
-    __dirname: false,
-  },
 };
