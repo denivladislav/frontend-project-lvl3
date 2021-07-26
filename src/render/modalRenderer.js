@@ -1,11 +1,10 @@
-export const modalRenderer = (currentModal, i18nextInstance, domElements) => {
+export const modalRenderer = (modal, i18nextInstance, domElements) => {
   const {
     modalTitle, modalBody, closeModalButton, readModalButton,
   } = domElements;
-
-  modalTitle.textContent = currentModal.title;
-  modalBody.textContent = currentModal.body;
+  modalTitle.textContent = modal.title;
+  modalBody.textContent = modal.description;
   closeModalButton.textContent = i18nextInstance.t('buttons.close');
   readModalButton.textContent = i18nextInstance.t('buttons.read');
-  readModalButton.href = currentModal.url;
+  readModalButton.href = modal.url;
 };

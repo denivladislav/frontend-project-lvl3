@@ -4,9 +4,7 @@ import getProxyUrl from './getProxyUrl.js';
 import parseFeedData from './rssParser.js';
 
 const createNewPosts = (data, feedId) => data.map((item) => ({
-  title: item.title,
-  description: item.description,
-  url: item.url,
+  ...item,
   id: _.uniqueId('post_'),
   feedId,
   viewed: false,

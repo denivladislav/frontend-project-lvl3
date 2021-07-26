@@ -5,16 +5,13 @@ import getProxyUrl from './getProxyUrl.js';
 import validateUrl from './urlValidator.js';
 
 const createNewFeed = (data, url) => ({
-  title: data.title,
-  description: data.description,
+  ...data,
   url,
   id: _.uniqueId('feed_'),
 });
 
 const createNewPosts = (data, feedId) => data.items.map((item) => ({
-  title: item.title,
-  description: item.description,
-  url: item.url,
+  ...item,
   id: _.uniqueId('post_'),
   feedId,
   viewed: false,

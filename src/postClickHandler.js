@@ -11,11 +11,7 @@ const postClickHandler = (event, watchedState) => {
   const oldViewedPosts = watchedState.uiState.viewedPosts;
   watchedState.uiState.viewedPosts = [...oldViewedPosts, newViewedPost.id];
 
-  watchedState.uiState.modal = {
-    title: newViewedPost.title,
-    body: newViewedPost.description,
-    url: newViewedPost.url,
-  };
+  watchedState.uiState.modal = { ...newViewedPost };
 };
 
 export default postClickHandler;
