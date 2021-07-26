@@ -29,6 +29,6 @@ export default (processState, i18nextInstance, domElements) => {
       inputField.focus();
       break;
     default:
-      throw new Error(`Unknown State, ${processState}`);
+      throw new Error(`Unknown state: ${processState}`);
   }
 };
