@@ -4,18 +4,18 @@ import parseRss from './rssParser.js';
 import getProxyForUrl from './getProxyForUrl.js';
 import validateUrl from './urlValidator.js';
 
-const createNewFeed = (feedData, url) => ({
-  title: feedData.title,
-  description: feedData.description,
+const createNewFeed = (data, url) => ({
+  title: data.title,
+  description: data.description,
   url,
   id: _.uniqueId('feed_'),
 });
 
-const createNewPosts = (postsData, feedId) => {
-  const newPosts = postsData.map((postData) => ({
-    title: postData.title,
-    description: postData.description,
-    url: postData.url,
+const createNewPosts = (data, feedId) => {
+  const newPosts = data.items.map((item) => ({
+    title: item.title,
+    description: item.description,
+    url: item.url,
     id: _.uniqueId('post_'),
     feedId,
     viewed: false,
@@ -35,11 +35,11 @@ const getRss = (url, watchedState) => {
 const updateState = (parsedData, watchedState, url) => {
   watchedState.processState = 'finished';
 
-  const newFeed = createNewFeed(parsedData.feedData, url);
+  const newFeed = createNewFeed(parsedData, url);
   const oldFeeds = watchedState.rssData.feeds;
   watchedState.rssData.feeds = [newFeed, ...oldFeeds];
 
-  const newPosts = createNewPosts(parsedData.postsData, newFeed.id);
+  const newPosts = createNewPosts(parsedData, newFeed.id);
   const oldPosts = watchedState.rssData.posts;
   watchedState.rssData.posts = [...newPosts, ...oldPosts];
 };

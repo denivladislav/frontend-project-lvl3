@@ -1,29 +1,21 @@
-export default (html) => {
+export default (xmlData) => {
   try {
-    const parsedResponseData = new window.DOMParser().parseFromString(html, 'text/xml');
+    const parsedXmlData = new window.DOMParser().parseFromString(xmlData, 'text/xml');
 
-    const feedTitle = parsedResponseData.querySelector('channel title').textContent;
-    const feedDescription = parsedResponseData.querySelector('channel description').textContent;
-    const feedData = {
-      title: feedTitle,
-      description: feedDescription,
-    };
+    const title = parsedXmlData.querySelector('channel title').textContent;
+    const description = parsedXmlData.querySelector('channel description').textContent;
 
-    const itemsArray = Array.from(parsedResponseData.querySelectorAll('item'));
-    const postsData = itemsArray.map((item) => {
-      const postTitle = item.querySelector('title').textContent;
-      const postDescription = item.querySelector('description').textContent;
-      const postLink = item.querySelector('link').textContent;
-      return {
-        title: postTitle,
-        description: postDescription,
-        url: postLink,
-      };
-    });
+    const itemElements = Array.from(parsedXmlData.querySelectorAll('item'));
+    const items = itemElements.map((element) => ({
+      title: element.querySelector('title').textContent,
+      description: element.querySelector('description').textContent,
+      url: element.querySelector('link').textContent.trim(),
+    }));
 
     return {
-      feedData,
-      postsData,
+      title,
+      description,
+      items,
     };
   } catch (e) {
     const error = new Error();

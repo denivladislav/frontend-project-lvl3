@@ -3,11 +3,11 @@ import axios from 'axios';
 import getProxyForUrl from './getProxyForUrl.js';
 import parseRss from './rssParser.js';
 
-const createNewPosts = (postsData, feedId) => {
-  const newPosts = postsData.map((postData) => ({
-    title: postData.title,
-    description: postData.description,
-    url: postData.url,
+const createNewPosts = (data, feedId) => {
+  const newPosts = data.map((item) => ({
+    title: item.title,
+    description: item.description,
+    url: item.url,
     id: _.uniqueId('post_'),
     feedId,
     viewed: false,
@@ -25,7 +25,7 @@ const updatePosts = (watchedState) => {
       .then((response) => parseRss(response.data.contents))
       .then((parsedData) => {
         const oldPosts = watchedState.rssData.posts;
-        const loadedPosts = parsedData.postsData;
+        const loadedPosts = parsedData.items;
         const diffPostsArray = _.differenceWith(loadedPosts, oldPosts,
           (a, b) => a.title === b.title);
         const newPosts = createNewPosts(diffPostsArray, feed.id);
