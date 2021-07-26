@@ -1,6 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
-import parseRss from './rssParser.js';
+import parseFeedData from './rssParser.js';
 import getProxyUrl from './getProxyUrl.js';
 import validateUrl from './urlValidator.js';
 
@@ -24,7 +24,7 @@ const createNewPosts = (data, feedId) => {
   return newPosts;
 };
 
-const getRssFeed = (url) => {
+const getFeedData = (url) => {
   const proxyUrl = getProxyUrl(url);
   const axiosPromise = axios.get(proxyUrl);
   return axiosPromise;
@@ -56,8 +56,8 @@ const handleFormSubmit = (event, watchedState) => {
     return;
   }
 
-  getRssFeed(url)
-    .then((response) => parseRss(response.data.contents))
+  getFeedData(url)
+    .then((response) => parseFeedData(response.data.contents))
     .then((parsedData) => updateState(parsedData, watchedState, url))
     .catch((error) => {
       watchedState.processState = 'failed';

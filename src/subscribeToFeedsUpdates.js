@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import axios from 'axios';
 import getProxyUrl from './getProxyUrl.js';
-import parseRss from './rssParser.js';
+import parseFeedData from './rssParser.js';
 
 const createNewPosts = (data, feedId) => {
   const newPosts = data.map((item) => ({
@@ -22,7 +22,7 @@ const updatePosts = (watchedState) => {
     const { url } = feed;
     const proxyUrl = getProxyUrl(url);
     const promise = axios.get(proxyUrl)
-      .then((response) => parseRss(response.data.contents))
+      .then((response) => parseFeedData(response.data.contents))
       .then((parsedData) => {
         const oldPosts = watchedState.rssData.posts;
         const loadedPosts = parsedData.items;
