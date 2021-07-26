@@ -24,7 +24,7 @@ const createNewPosts = (data, feedId) => {
   return newPosts;
 };
 
-const getRss = (url) => {
+const getRssFeed = (url) => {
   const proxyUrl = getProxyUrl(url);
   const axiosPromise = axios.get(proxyUrl);
   return axiosPromise;
@@ -56,7 +56,7 @@ const handleFormSubmit = (event, watchedState) => {
     return;
   }
 
-  getRss(url)
+  getRssFeed(url)
     .then((response) => parseRss(response.data.contents))
     .then((parsedData) => updateState(parsedData, watchedState, url))
     .catch((error) => {
