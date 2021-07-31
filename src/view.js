@@ -13,5 +13,9 @@ export default (state, i18nextInstance, domElements) => onChange(state, (statePa
     'uiState.viewedPosts': viewedPostsRenderer,
     error: errorRenderer,
   };
-  viewsMap[statePath](currValue, i18nextInstance, domElements, state);
+  if (viewsMap[statePath]) {
+    viewsMap[statePath](currValue, i18nextInstance, domElements, state);
+  } else {
+    throw new Error(`Unknown state path: ${statePath}`);
+  }
 });
