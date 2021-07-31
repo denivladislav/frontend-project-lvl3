@@ -19,9 +19,9 @@ const updatePosts = (watchedState) => {
       .then((parsedData) => {
         const oldPosts = watchedState.rssData.posts;
         const loadedPosts = parsedData.items;
-        const diffPostsArray = _.differenceWith(loadedPosts, oldPosts,
+        const changedPosts = _.differenceWith(loadedPosts, oldPosts,
           (a, b) => a.title === b.title);
-        const newPosts = createNewPosts(diffPostsArray, feed.id);
+        const newPosts = createNewPosts(changedPosts, feed.id);
         watchedState.rssData.posts = [...newPosts, ...oldPosts];
       })
       .catch((error) => console.error(error));
