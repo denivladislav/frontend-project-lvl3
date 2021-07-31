@@ -7,7 +7,6 @@ const createNewPosts = (data, feedId) => data.map((item) => ({
   ...item,
   id: _.uniqueId('post_'),
   feedId,
-  viewed: false,
 }));
 
 const updatePosts = (watchedState) => {

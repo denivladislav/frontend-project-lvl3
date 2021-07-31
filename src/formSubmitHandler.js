@@ -14,7 +14,6 @@ const createNewPosts = (data, feedId) => data.items.map((item) => ({
   ...item,
   id: _.uniqueId('post_'),
   feedId,
-  viewed: false,
 }));
 
 const getFeedData = (url) => {
