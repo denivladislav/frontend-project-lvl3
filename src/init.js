@@ -43,13 +43,11 @@ export default () => {
         readModalButton: document.querySelector('#readModalButton'),
       };
 
-      const delay = 5000;
-
       const watchedState = watch(state, i18nextInstance, domElements);
 
       const { form, posts } = domElements;
       form.addEventListener('submit', (event) => handleFormSubmit(event, watchedState));
       posts.addEventListener('click', (event) => handlePostClick(event, watchedState));
-      subscribeToFeedsUpdates(watchedState, delay);
+      subscribeToFeedsUpdates(watchedState);
     });
 };

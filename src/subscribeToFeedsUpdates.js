@@ -29,11 +29,11 @@ const updatePosts = (watchedState) => {
   return Promise.all(promises);
 };
 
-const subscribeToFeedsUpdates = (state, delay) => {
+const subscribeToFeedsUpdates = (state) => {
   setTimeout(() => updatePosts(state)
     .finally(() => {
-      subscribeToFeedsUpdates(state, delay);
-    }), delay);
+      subscribeToFeedsUpdates(state);
+    }), 5000);
 };
 
 export default subscribeToFeedsUpdates;
