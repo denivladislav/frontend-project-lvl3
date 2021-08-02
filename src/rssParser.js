@@ -18,9 +18,8 @@ export default (xmlData) => {
       items,
     };
   } catch (e) {
-    const error = new Error();
+    const error = new Error('Parse Error');
     error.isRssParseError = true;
-    error.message = 'Parse Error';
     console.error(error);
     throw error;
   }
