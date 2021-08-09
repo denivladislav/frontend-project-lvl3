@@ -19,6 +19,8 @@ export default () => {
     error: null,
   };
 
+  console.log('Hello');
+
   const domElements = {
     inputField: document.querySelector('#url-input'),
     addButton: document.querySelector('#addButton'),
