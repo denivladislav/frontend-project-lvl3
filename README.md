@@ -4,7 +4,7 @@
 width="800" length="1000">
 
 [![Actions Status](https://github.com/vvvhatislove/frontend-project-lvl3/workflows/hexlet-check/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions)
-[![CI](https://github.com/vvvhatislove/frontend-project-lvl2/workflows/CI/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions/workflows/CI.yml)
+[![CI](https://github.com/vvvhatislove/frontend-project-lvl3/workflows/CI/badge.svg)](https://github.com/vvvhatislove/frontend-project-lvl3/actions/workflows/CI.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a6e986e51cfc804b1e44/maintainability)](https://codeclimate.com/github/vvvhatislove/frontend-project-lvl3/maintainability)
 
 ## Использование
