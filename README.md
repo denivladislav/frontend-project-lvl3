@@ -34,5 +34,5 @@ $ make develop
 ## Благодарность
 Данное приложение выполнено в рамках обучения по профессии «Frontend-разработчик» на <a href="https://en.hexlet.io/pages/about">Hexlet</a>.  
 <a href=https://en.hexlet.io/pages/about>
-  <img src="https://pbs.twimg.com/profile_images/1104765658829602816/7wuM7zyo_400x400.png" alt="Hexlet logo" width="200" length="200">
+  <img src="https://cdn2.hexlet.io/assets/hexlet_logo-4e7b643fd7cbe42da81624aba2faa9267523b2b925d5b576536e05d061659083.png" alt="Hexlet logo" width="200" length="200">
 </a>
