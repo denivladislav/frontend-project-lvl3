@@ -1,5 +1,5 @@
 # RSS агрегатор
-Простое и лаконичное приложение для ваших новостей.  
+Лаконичное приложение для ваших новостей.  
 <img src="https://user-images.githubusercontent.com/71961494/125065873-09a13c80-e0bb-11eb-9595-17b21e971df1.png" alt="RSS aggregator screenshot"
 width="800" length="1000">
 
